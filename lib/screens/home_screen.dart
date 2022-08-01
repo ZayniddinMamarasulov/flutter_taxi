@@ -22,6 +22,7 @@ class HomePage extends StatelessWidget {
                       margin: EdgeInsets.all(8),
                       padding: EdgeInsets.all(4),
                       height: 48,
+
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.white,
