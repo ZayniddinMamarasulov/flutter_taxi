@@ -44,15 +44,16 @@ class _LoginScreenState extends State<LoginScreen> {
           TextFieldFormWidget(
             title: 'Email',
             controller: _emailController,
-            onFieldSubmitted: (String val) {
-            },            keyboardType: TextInputType.emailAddress,
+            onFieldSubmitted: (String val) {},
+            keyboardType: TextInputType.emailAddress,
             obscureText: false,
             suffixIcon: false,
           ),
           TextFieldFormWidget(
             title: 'Password',
             controller: _passwordController,
-            onFieldSubmitted: (String val) {},            keyboardType: TextInputType.text,
+            onFieldSubmitted: (String val) {},
+            keyboardType: TextInputType.text,
             obscureText: true,
             suffixIcon: true,
           ),

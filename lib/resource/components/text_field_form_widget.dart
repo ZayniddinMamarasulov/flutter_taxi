@@ -38,7 +38,7 @@ class TextFieldFormWidget extends StatelessWidget {
               height: 44,
               width: 303,
               child: TextFormField(
-                obscureText: true ? obscureText : false,
+                obscureText: obscureText,
                 onFieldSubmitted:   onFieldSubmitted,
                 controller: controller,
                 keyboardType: keyboardType,

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_taxi/screens/home_screen.dart';
 import 'package:flutter_taxi/screens/signup_screen.dart';
 
 class SplashScreen extends StatefulWidget {
