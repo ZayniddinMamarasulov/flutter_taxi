@@ -19,8 +19,8 @@ class HomePage extends StatelessWidget {
                   GestureDetector(
                     onTap: () => _scaffoldKey.currentState?.openDrawer(),
                     child: Container(
-                      margin: EdgeInsets.all(8),
-                      padding: EdgeInsets.all(4),
+                      margin: const EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(4),
                       height: 48,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
@@ -42,7 +42,7 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      drawer: Drawer(
+      drawer:const Drawer(
         backgroundColor: Colors.green,
       ),
     );

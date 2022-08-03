@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_taxi/screens/home_screen.dart';
+import 'package:flutter_taxi/screens/sign_up_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -24,14 +24,14 @@ class _SplashScreenState extends State<SplashScreen> {
 
   route() {
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => HomePage()));
+        context, MaterialPageRoute(builder: (context) => const SignUpScreen()));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration:const BoxDecoration(
             image: DecorationImage(
                 fit: BoxFit.cover,
                 image: AssetImage('assets/splash_background.png'))),
