@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_taxi/components/drawer.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({Key? key}) : super(key: key);
+class HomeScreen extends StatelessWidget {
+  HomeScreen({Key? key}) : super(key: key);
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData mediaQueryData = MediaQuery.of(context);
+    var size = mediaQueryData.size;
     return Scaffold(
       key: _scaffoldKey,
+      drawer: drawer(size),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8),
@@ -42,9 +46,7 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      drawer: Drawer(
-        backgroundColor: Colors.green,
-      ),
+
     );
   }
 }
