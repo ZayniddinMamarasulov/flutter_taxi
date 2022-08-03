@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_taxi/screens/home_screen.dart';
+import 'package:flutter_taxi/screens/sing_up_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   route() {
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => HomePage()));
+        context, MaterialPageRoute(builder: (context) => SignUpPage()));
   }
 
   @override
