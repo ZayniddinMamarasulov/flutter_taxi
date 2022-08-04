@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_taxi/screens/splash_screen.dart';
+
+import 'utils/routes/routes.dart';
+import 'utils/routes/routes_name.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,9 +12,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      initialRoute: RoutesName.splash,
+      onGenerateRoute: Routes.generateRoute,
     );
   }
 }
