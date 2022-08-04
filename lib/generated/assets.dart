@@ -2,11 +2,12 @@
 class Assets {
   Assets._();
 
-  static const String assetsIcFacebook = 'assets/facebook.png';
-  static const String assetsIcGmail = 'assets/gmail.png';
+  static const String assetsFacebook = 'assets/facebook.png';
+  static const String assetsGmail = 'assets/gmail.png';
   static const String assetsIcMenu = 'assets/ic_menu.png';
-  static const String assetsIcTwitter = 'assets/twitter.png';
+  static const String assetsMap = 'assets/map.png';
   static const String assetsSplashBackground = 'assets/splash_background.png';
   static const String assetsSplashLogo = 'assets/splash_logo.png';
+  static const String assetsTwitter = 'assets/twitter.png';
 
 }
