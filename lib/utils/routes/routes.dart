@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_taxi/screens/home_screen.dart';
-import 'package:flutter_taxi/screens/login_screen.dart';
-import 'package:flutter_taxi/screens/signup_screen.dart';
+import 'package:flutter_taxi/screens/sign_in_screen.dart';
+import 'package:flutter_taxi/screens/sign_up_screen.dart';
 import 'package:flutter_taxi/screens/splash_screen.dart';
 
 import 'routes_name.dart';

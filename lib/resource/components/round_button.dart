@@ -18,7 +18,7 @@ class RoundButton extends StatelessWidget {
       height: 60,
       width: 303,
       child: ElevatedButton(
-        onPressed:  onPressed,
+        onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),

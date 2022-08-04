@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_taxi/utils/routes/routes_name.dart';
-
 import 'utils/routes/routes.dart';
+import 'utils/routes/routes_name.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,9 +12,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  const MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute:  RoutesName.splash,
+      initialRoute: RoutesName.splash,
       onGenerateRoute: Routes.generateRoute,
     );
   }

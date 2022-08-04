@@ -39,7 +39,7 @@ class TextFieldFormWidget extends StatelessWidget {
               width: 303,
               child: TextFormField(
                 obscureText: obscureText,
-                onFieldSubmitted:   onFieldSubmitted,
+                onFieldSubmitted: onFieldSubmitted,
                 controller: controller,
                 keyboardType: keyboardType,
                 decoration: InputDecoration(

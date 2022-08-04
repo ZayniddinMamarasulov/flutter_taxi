@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_taxi/screens/signup_screen.dart';
+import 'package:flutter_taxi/screens/sign_up_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   startTimer() async {
     var duration = const Duration(seconds: 3);
-    return  Timer(duration, route);
+    return Timer(duration, route);
   }
 
   route() {
@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration:const  BoxDecoration(
+        decoration: const BoxDecoration(
             image: DecorationImage(
                 fit: BoxFit.cover,
                 image: AssetImage('assets/splash_background.png'))),
