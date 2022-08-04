@@ -6,6 +6,7 @@ import 'package:flutter_taxi/screens/splash_screen.dart';
 
 import 'routes_name.dart';
 
+// routes
 class Routes {
   static MaterialPageRoute? generateRoute(RouteSettings settings) {
     switch (settings.name) {
