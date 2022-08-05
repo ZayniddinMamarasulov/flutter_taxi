@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   Widget build(BuildContext context) {
-    final controller = ScrollController();
-    var mediaquery = MediaQuery.of(context);
-    var size = mediaquery.size;
-    var oriantation = mediaquery.orientation;
+    // final controller = ScrollController();
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.white70,
         onPressed: () {
           showMaterialModalBottomSheet(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)),
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(25),topRight: Radius.circular(25)),
 
             ),
             context: context,
@@ -31,97 +29,61 @@ class HomePage extends StatelessWidget {
                SingleChildScrollView(
                 controller: scrollController,
                 child: Container(
-                  height: 400,
-                  width: oriantation==Orientation ?
-                  size.width*double.infinity:size.width*double.infinity,
-                  child: Column(
+                  
+                  child: Stack(
+                    alignment: AlignmentDirectional.bottomCenter,
+                    clipBehavior: Clip.none,
                     children: [
-                      SizedBox(height: 12,),
-                      Text("Eng oxirgi manzillar",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17),),
-                      Form(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
-                          decoration: InputDecoration(
-                            filled: true,
-                            labelText: "Manzilni kiriting",
-                            prefixIcon: IconButton(onPressed: (){}, icon: Icon(Icons.search),
+                      Positioned(
+                          top: -15,
+                          child: Container(
+                            decoration: BoxDecoration(
+
+                              borderRadius: BorderRadius.circular(16),
+                              color: Colors.white,
                             ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(16)
-                            )
+                        width: 60,
+                        height: 7,
+
+                      )),
+                      Column(
+                        children: [
+                          SizedBox(height: 12,),
+                          Text("Eng oxirgi manzillar",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17),),
+                          Form(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                    filled: true,
+                                    labelText: "Manzilni kiriting",
+                                    prefixIcon: IconButton(onPressed: (){}, icon: Icon(Icons.search),
+                                    ),
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(16)
+                                    )
+                                ),
+                              ),
+                            ),
                           ),
+                          placeList("Hilton"),
+                          Divider(color: Colors.black54,indent: 50,),
+                          placeList("Magic city"),
+                          Divider(color: Colors.black54,indent: 50,),
+                          placeList("Mediapark"),
+                          Divider(color: Colors.black54,indent: 50,),
+                          placeList("NBU"),
+                          Divider(color: Colors.black54,indent: 50,),
+                        ],
                       ),
-                        ),
-                      ),
-                      placeList("Hilton"),
-                                  Divider(color: Colors.black54,indent: 50,),
-                                  placeList("Magic city"),
-                                  Divider(color: Colors.black54,indent: 50,),
-                                  placeList("Mediapark"),
-                                  Divider(color: Colors.black54,indent: 50,),
-                                  placeList("NBU"),
-                                  Divider(color: Colors.black54,indent: 50,),
                     ],
-                  ),
+                  )
                 ),
               ),
             ),
 
 
-          // showModalBottomSheet(
 
-              // shape: RoundedRectangleBorder(
-              //   borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)),
-              // ),
-              //
-              // context: context,
-              // builder: (BuildContext context) {
-              //
-              //   return Container(
-              //     height: oriantation == Orientation.portrait
-              //         ? size.height * 200
-              //         : size.height * 100,
-              //     width: oriantation == Orientation.portrait
-              //         ? size.width * double.infinity
-              //         : size.width * double.infinity,
-              //     child: SingleChildScrollView(
-              //       child: Padding(
-              //         padding: const EdgeInsets.all(12.0),
-              //         child: Column(
-              //           crossAxisAlignment: CrossAxisAlignment.center,
-              //           children: [
-              //             Text("Eng oxirgi manzillar",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
-              //             Form(child: Padding(
-              //               padding: const EdgeInsets.all(14.0),
-              //               child: TextFormField(
-              //                 decoration: InputDecoration(
-              //                     filled: true,
-              //                     labelText: "Manzilni kiriting",
-              //                     prefixIcon: IconButton(
-              //                         onPressed: () {}, icon: Icon(Icons.search)),
-              //                     border: OutlineInputBorder(
-              //                         borderRadius: BorderRadius.circular(20)
-              //                     )
-              //                 ),
-              //               ),
-              //             ),
-              //             ),
-              //             placeList("Hilton"),
-              //             Divider(color: Colors.black54,indent: 50,),
-              //             placeList("Magic city"),
-              //             Divider(color: Colors.black54,indent: 50,),
-              //             placeList("Mediapark"),
-              //             Divider(color: Colors.black54,indent: 50,),
-              //             placeList("NBU"),
-              //             Divider(color: Colors.black54,indent: 50,),
-              //
-              //           ],
-              //         ),
-              //       ),
-              //     ),
-              //   );
-              //},
           );
         },
         child: Icon(
