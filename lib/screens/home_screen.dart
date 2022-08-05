@@ -38,13 +38,84 @@ class HomePage extends StatelessWidget {
                   )
                 ],
               ),
+              TextButton(
+                  onPressed: () {
+                    buildBottomSheet(context);
+                  },
+                  child: Text('show bottomsheet')),
             ],
           ),
         ),
       ),
-      drawer:const Drawer(
+      drawer: const Drawer(
         backgroundColor: Colors.green,
       ),
     );
+  }
+
+  Future buildBottomSheet(BuildContext context) {
+    return showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        barrierColor: Colors.transparent,
+        context: context,
+        builder: (context) {
+          return Container(
+            decoration: const BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Color.fromRGBO(0, 0, 0, 0.05),
+                    offset: Offset(-1, -1),
+                    blurRadius: 10,
+                  )
+                ],
+                color: Color(0xffFFFFFF),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(26),
+                  topRight: Radius.circular(26),
+                )),
+            child: Column(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 15, bottom: 25),
+                  width: 30,
+                  height: 4,
+                  decoration: const BoxDecoration(
+                      color: Color(0xffD5DDE0),
+                      borderRadius: BorderRadius.all(Radius.circular(4))),
+                ),
+                
+                Container(
+                  width: 333,
+                  height: 44,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color.fromRGBO(0, 0, 0, 0.1),
+                        offset: Offset(0, 3),
+                        blurRadius: 10,
+                      )
+                    ],
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.all(10).copyWith(bottom: 4),
+                        child: const Image(width: 30,
+                          height: 30,
+                          image: AssetImage('assets/ic_search.png'),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+
+              ],
+            ),
+          );
+        });
   }
 }
