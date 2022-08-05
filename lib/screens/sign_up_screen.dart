@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_taxi/screens/home_screen.dart';
 import 'package:flutter_taxi/screens/sign_in_screen.dart';
+import 'package:flutter_taxi/utils/colors.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -17,22 +18,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final passwordController = TextEditingController();
 
   @override
+  void dispose() {
+
+    super.dispose();
+    nameController.dispose();
+    gmailController.dispose();
+    passwordController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color(0xffF7F8F9),
+        backgroundColor: backgroundColor,
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                height: MediaQuery.of(context).size.height * 20 / 812,
-                width: MediaQuery.of(context).size.width * 237 / 375,
+                height: 20,
+                width: 237,
                 margin: const EdgeInsets.only(top: 35),
-                child: Text(
+                child: const Text(
                   "Регистраация",
                   style: TextStyle(
-                    color: const Color(0xff3E4958),
-                    fontSize: MediaQuery.of(context).size.height * 20 / 812,
+                    color: Color(0xff3E4958),
+                    fontSize: 20,
                     fontFamily: "PT Sans",
                     fontWeight: FontWeight.w700,
                     fontStyle: FontStyle.normal,
@@ -40,11 +50,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   textAlign: TextAlign.center,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 153 / 812),
+              const SizedBox(height: 153),
               buildTextField('ИМЯ', nameController),
               buildTextField('ЭЛЕКТРОННАЯ ПОЧТА', gmailController),
               buildTextField('ПАРОЛЬ', passwordController, isPassword: true),
-              SizedBox(height: MediaQuery.of(context).size.height * 36 / 812),
+              const SizedBox(height: 36),
               InkWell(
                 onTap: () {
                   if (passwordController.text.isNotEmpty &&
@@ -55,9 +65,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   }
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric(
-                      vertical: MediaQuery.of(context).size.height * 22 / 812),
-                  height: MediaQuery.of(context).size.height * 60 / 812,
+                  padding: const EdgeInsets.symmetric(vertical: 22),
+                  height: 60,
                   width: MediaQuery.of(context).size.width * 303 / 375,
                   decoration: BoxDecoration(
                     color: const Color(0xff7EAB3A),
@@ -65,7 +74,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Border.all(color: const Color(0xffD5DDE0), width: 0.5),
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
                   ),
-                  child: Text(
+                  child: const Text(
                     "Зарегистрироваться",
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -73,38 +82,37 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         fontStyle: FontStyle.normal,
                         fontFamily: "Inter",
                         fontWeight: FontWeight.w700,
-                        fontSize:
-                            MediaQuery.of(context).size.height * 16 / 812),
+                        fontSize: 16),
                   ),
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 188 / 812),
+              const SizedBox(height: 188),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     "Уже есть учетная запись?",
                     style: TextStyle(
-                      color: const Color(0xff97ADB6),
-                      fontSize: MediaQuery.of(context).size.height * 15 / 812,
+                      color: Color(0xff97ADB6),
+                      fontSize: 15,
                       fontWeight: FontWeight.w400,
                       fontFamily: "Inter",
                       fontStyle: FontStyle.normal,
                     ),
                   ),
-                  SizedBox(width: MediaQuery.of(context).size.width * 6 / 375),
+                  const SizedBox(width: 6),
                   InkWell(
                     onTap: () {
-                      Navigator.pushReplacement(
+                      Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => const SignInScreen()));
                     },
-                    child: Text(
+                    child: const Text(
                       "Войти",
                       style: TextStyle(
-                        color: const Color(0xff7EAB3A),
-                        fontSize: MediaQuery.of(context).size.height * 15 / 812,
+                        color: Color(0xff7EAB3A),
+                        fontSize: 15,
                         fontWeight: FontWeight.w400,
                         fontFamily: "Inter",
                         fontStyle: FontStyle.normal,
@@ -120,35 +128,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Padding buildTextField(String text, controller, {bool isPassword = false}) {
     return Padding(
-      padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).size.height * 16 / 812,
-      ),
+      padding: const EdgeInsets.only(bottom: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: EdgeInsets.only(
-                left: MediaQuery.of(context).size.width * 40 / 375),
-            height: MediaQuery.of(context).size.height * 20 / 812,
-            width: MediaQuery.of(context).size.width * 256 / 375,
+            margin: const EdgeInsets.only(left: 40),
+            height: 20,
+            width: 256,
             child: Text(
               text,
               style: const TextStyle(color: Color(0xff3E4958), fontSize: 13),
             ),
           ),
-          SizedBox(height: MediaQuery.of(context).size.height * 7 / 812),
+          const SizedBox(height: 7),
           Container(
-            margin: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width * 36 / 375),
-            padding: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width * 12 / 375)
-                .copyWith(right: MediaQuery.of(context).size.width * 8 / 375),
-            height: MediaQuery.of(context).size.height * 44 / 812,
+            margin: const EdgeInsets.symmetric(horizontal: 36),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 12).copyWith(right: 8),
+            height: 44,
             width: MediaQuery.of(context).size.width * 303 / 375,
             decoration: BoxDecoration(
-              color: const Color(0x40D5DDE0),
+              color: textFieldBackgroundColor,
               borderRadius: const BorderRadius.all(Radius.circular(15)),
-              border: Border.all(color: const Color(0xffD5DDE0), width: 0.5),
+              border: Border.all(color: textFieldBorderColor, width: 0.5),
             ),
             child: isPassword
                 ? TextField(
@@ -167,7 +170,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ? Icons.visibility_off
                               : Icons.visibility,
                           color: const Color(0xff97ADB6),
-                          size: MediaQuery.of(context).size.width * 20 / 375,
+                          size: 20,
                         ),
                       ),
                     ),

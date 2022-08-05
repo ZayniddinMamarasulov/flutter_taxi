@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_taxi/screens/sign_up_screen.dart';
+
+import '../utils/colors.dart';
 import 'home_screen.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -15,22 +16,30 @@ class _SignInScreenState extends State<SignInScreen> {
   final gmailController = TextEditingController();
 
   @override
+  void dispose() {
+
+    super.dispose();
+    passwordController.dispose();
+    gmailController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color(0xffF7F8F9),
+        backgroundColor: backgroundColor,
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                height: MediaQuery.of(context).size.height * 20 / 812,
-                width: MediaQuery.of(context).size.width * 237 / 375,
+                height: 20,
+                width: 237,
                 margin: const EdgeInsets.only(top: 35),
-                child: Text(
+                child: const Text(
                   "Вход",
                   style: TextStyle(
-                    color: const Color(0xff3E4958),
-                    fontSize: MediaQuery.of(context).size.height * 20 / 812,
+                    color: Color(0xff3E4958),
+                    fontSize: 20,
                     fontFamily: "PT Sans",
                     fontWeight: FontWeight.w700,
                     fontStyle: FontStyle.normal,
@@ -38,22 +47,25 @@ class _SignInScreenState extends State<SignInScreen> {
                   textAlign: TextAlign.center,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 153 / 812),
+              const SizedBox(height: 153),
               buildTextField('ЭЛЕКТРОННАЯ ПОЧТА', gmailController),
               buildTextField('ПАРОЛЬ', passwordController, isPassword: true),
-              SizedBox(height: MediaQuery.of(context).size.height * 36 / 812),
+              const SizedBox(height: 36),
               InkWell(
                 onTap: () {
                   if (passwordController.text.isNotEmpty &&
                       gmailController.text.isNotEmpty) {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => HomePage()));
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomePage(),
+                        ),
+                        (route) => false);
                   }
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric(
-                      vertical: MediaQuery.of(context).size.height * 22 / 812),
-                  height: MediaQuery.of(context).size.height * 60 / 812,
+                  padding: const EdgeInsets.symmetric(vertical: 22),
+                  height: 60,
                   width: MediaQuery.of(context).size.width * 303 / 375,
                   decoration: BoxDecoration(
                     color: const Color(0xff7EAB3A),
@@ -61,7 +73,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         Border.all(color: const Color(0xffD5DDE0), width: 0.5),
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
                   ),
-                  child: Text(
+                  child: const Text(
                     "Войти",
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -69,32 +81,30 @@ class _SignInScreenState extends State<SignInScreen> {
                         fontStyle: FontStyle.normal,
                         fontFamily: "Inter",
                         fontWeight: FontWeight.w700,
-                        fontSize:
-                            MediaQuery.of(context).size.height * 16 / 812),
+                        fontSize: 16),
                   ),
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 50 / 812),
+              const SizedBox(height: 50),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                      margin: EdgeInsets.only(
-                          right: MediaQuery.of(context).size.width * 9 / 375),
-                      width: MediaQuery.of(context).size.width * 59 / 375,
+                      margin: const EdgeInsets.only(right: 9),
+                      width: 59,
                       child: const Divider(
                         height: 2,
                         color: Color(0xffD5DDE0),
                       )),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 167 / 375,
-                    height: MediaQuery.of(context).size.height * 20 / 812,
+                  const SizedBox(
+                    height: 20,
+                    width: 167,
                     child: Center(
                         child: Text(
                       'Или Войдите С помощью',
                       style: TextStyle(
-                        color: const Color(0xff3E4958),
-                        fontSize: MediaQuery.of(context).size.height * 13 / 812,
+                        color: Color(0xff3E4958),
+                        fontSize: 13,
                         fontWeight: FontWeight.w700,
                         fontStyle: FontStyle.normal,
                         fontFamily: "PT Sans",
@@ -102,69 +112,62 @@ class _SignInScreenState extends State<SignInScreen> {
                     )),
                   ),
                   Container(
-                      margin: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width * 9 / 375),
-                      width: MediaQuery.of(context).size.width * 59 / 375,
+                      margin: const EdgeInsets.only(left: 9),
+                      width: 59,
                       child: const Divider(
                         height: 2,
                         color: Color(0xffD5DDE0),
                       )),
                 ],
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 30 / 812),
+              const SizedBox(height: 30),
               Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width * 90 / 375),
+                padding: const EdgeInsets.symmetric(horizontal: 90),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-
                     Image.asset(
                       'assets/ic_facebook.png',
-                      width: MediaQuery.of(context).size.width * 50 / 375,
+                      width: 50,
                       height: 50,
                     ),
                     Image.asset(
                       'assets/ic_twitter.png',
-                      width: MediaQuery.of(context).size.width * 50 / 375,
+                      width: 50,
                       height: 50,
                     ),
-
                     Image.asset(
                       'assets/ic_gmail.png',
-                      width: MediaQuery.of(context).size.width * 50 / 375,
+                      width: 50,
                       height: 50,
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 125 / 812),
+              const SizedBox(height: 125),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     "Нет учетной записи? ",
                     style: TextStyle(
-                      color: const Color(0xff97ADB6),
-                      fontSize: MediaQuery.of(context).size.height * 15 / 812,
+                      color: Color(0xff97ADB6),
+                      fontSize: 15,
                       fontWeight: FontWeight.w400,
                       fontFamily: "Inter",
                       fontStyle: FontStyle.normal,
                     ),
                   ),
-                  SizedBox(width: MediaQuery.of(context).size.width * 6 / 375),
+                  const SizedBox(width: 6),
                   InkWell(
                     onTap: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const SignUpScreen()));
+                      Navigator.pop(context);
                     },
-                    child: Text(
+                    child: const Text(
                       "Регистрация",
                       style: TextStyle(
-                        color: const Color(0xff7EAB3A),
-                        fontSize: MediaQuery.of(context).size.height * 15 / 812,
+                        color: Color(0xff7EAB3A),
+                        fontSize: 15,
                         fontWeight: FontWeight.w400,
                         fontFamily: "Inter",
                         fontStyle: FontStyle.normal,
@@ -180,34 +183,29 @@ class _SignInScreenState extends State<SignInScreen> {
 
   Padding buildTextField(String text, controller, {bool isPassword = false}) {
     return Padding(
-      padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).size.height * 16 / 812,
-      ),
+      padding: const EdgeInsets.only(bottom: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: EdgeInsets.only(
-                left: MediaQuery.of(context).size.width * 40 / 375),
-            height: MediaQuery.of(context).size.height * 20 / 812,
-            width: MediaQuery.of(context).size.width * 256 / 375,
+            margin: const EdgeInsets.only(left: 40),
+            height: 20,
+            width: 256,
             child: Text(
               text,
               style: const TextStyle(color: Color(0xff3E4958), fontSize: 13),
             ),
           ),
-          SizedBox(height: MediaQuery.of(context).size.height * 7 / 812),
+          const SizedBox(height: 7),
           Container(
-            margin: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width * 36 / 375),
-            padding: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width * 12 / 375),
-            height: MediaQuery.of(context).size.height * 44 / 812,
+            margin: const EdgeInsets.symmetric(horizontal: 36),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            height: 44,
             width: MediaQuery.of(context).size.width * 303 / 375,
             decoration: BoxDecoration(
-              color: const Color(0x40D5DDE0),
+              color: textFieldBackgroundColor,
               borderRadius: const BorderRadius.all(Radius.circular(15)),
-              border: Border.all(color: const Color(0xffD5DDE0), width: 0.5),
+              border: Border.all(color: textFieldBorderColor, width: 0.5),
             ),
             child: isPassword
                 ? TextField(
@@ -230,9 +228,10 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                     ),
                   )
-                : const TextField(
+                : TextField(
+                    controller: controller,
                     textInputAction: TextInputAction.next,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                     ),
                   ),
