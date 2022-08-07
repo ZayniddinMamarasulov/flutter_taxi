@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_taxi/screens/splash_screen.dart';
+import 'package:flutter_taxi/verification_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: SplashScreen(),
+      home: VerificatonPage(),
     );
   }
 }
