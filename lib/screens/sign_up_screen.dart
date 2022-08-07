@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_taxi/screens/home_screen.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_taxi/screens/sign_in_screen.dart';
 import 'package:flutter_taxi/utils/colors.dart';
 
@@ -14,15 +14,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool isObscureText = true;
 
   final nameController = TextEditingController();
-  final gmailController = TextEditingController();
+  final numberController = TextEditingController();
   final passwordController = TextEditingController();
 
   @override
   void dispose() {
-
     super.dispose();
     nameController.dispose();
-    gmailController.dispose();
+    numberController.dispose();
     passwordController.dispose();
   }
 
@@ -52,16 +51,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               const SizedBox(height: 153),
               buildTextField('ИМЯ', nameController),
-              buildTextField('ЭЛЕКТРОННАЯ ПОЧТА', gmailController),
-              buildTextField('ПАРОЛЬ', passwordController, isPassword: true),
+              buildTextField('номер телефона'.toUpperCase(), numberController),
+              buildTextField('ПАРОЛЬ', passwordController),
               const SizedBox(height: 36),
               InkWell(
                 onTap: () {
                   if (passwordController.text.isNotEmpty &&
-                      gmailController.text.isNotEmpty &&
+                      numberController.text.isNotEmpty &&
                       nameController.text.isNotEmpty) {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => HomePage()));
+                    String number = numberController.text;
+                    Navigator.pushNamed(context, 'verify',
+                        arguments: {'number': number});
                   }
                 },
                 child: Container(
@@ -153,7 +153,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               borderRadius: const BorderRadius.all(Radius.circular(15)),
               border: Border.all(color: textFieldBorderColor, width: 0.5),
             ),
-            child: isPassword
+            child: text == 'ПАРОЛЬ'
                 ? TextField(
                     controller: controller,
                     obscureText: isObscureText,
@@ -178,6 +178,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 : TextField(
                     controller: controller,
                     textInputAction: TextInputAction.next,
+                    keyboardType: text == 'номер телефона'
+                        ? TextInputType.number
+                        : TextInputType.text,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
                     ),

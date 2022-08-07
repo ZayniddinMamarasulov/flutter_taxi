@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_taxi/screens/drawer_screen.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({Key? key}) : super(key: key);
+class HomeScreen extends StatelessWidget {
+  HomeScreen({Key? key}) : super(key: key);
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -35,21 +36,19 @@ class HomePage extends StatelessWidget {
                       ),
                       child: Image.asset('assets/ic_menu.png'),
                     ),
-                  )
+                  ),
                 ],
               ),
               TextButton(
                   onPressed: () {
                     buildBottomSheet(context);
                   },
-                  child: Text('show bottomsheet')),
+                  child: const Text('show bottomsheet')),
             ],
           ),
         ),
       ),
-      drawer: const Drawer(
-        backgroundColor: Colors.green,
-      ),
+      drawer: const DrawerScreen(),
     );
   }
 
@@ -83,7 +82,6 @@ class HomePage extends StatelessWidget {
                       color: Color(0xffD5DDE0),
                       borderRadius: BorderRadius.all(Radius.circular(4))),
                 ),
-                
                 Container(
                   width: 333,
                   height: 44,
@@ -93,7 +91,8 @@ class HomePage extends StatelessWidget {
                       BoxShadow(
                         color: Color.fromRGBO(0, 0, 0, 0.1),
                         offset: Offset(0, 3),
-                        blurRadius: 10,
+                        spreadRadius: 4,
+                        blurRadius: 7,
                       )
                     ],
                     borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -103,7 +102,8 @@ class HomePage extends StatelessWidget {
                       border: InputBorder.none,
                       prefixIcon: Padding(
                         padding: const EdgeInsets.all(10).copyWith(bottom: 4),
-                        child: const Image(width: 30,
+                        child: const Image(
+                          width: 30,
                           height: 30,
                           image: AssetImage('assets/ic_search.png'),
                         ),
@@ -111,8 +111,6 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                 ),
-
-
               ],
             ),
           );

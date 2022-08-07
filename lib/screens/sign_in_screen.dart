@@ -13,14 +13,14 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   bool isObscureText = true;
   final passwordController = TextEditingController();
-  final gmailController = TextEditingController();
+  final numberController = TextEditingController();
 
   @override
   void dispose() {
 
     super.dispose();
     passwordController.dispose();
-    gmailController.dispose();
+    numberController.dispose();
   }
 
   @override
@@ -48,17 +48,17 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ),
               const SizedBox(height: 153),
-              buildTextField('ЭЛЕКТРОННАЯ ПОЧТА', gmailController),
+              buildTextField('номер телефона'.toUpperCase(), numberController),
               buildTextField('ПАРОЛЬ', passwordController, isPassword: true),
               const SizedBox(height: 36),
               InkWell(
                 onTap: () {
                   if (passwordController.text.isNotEmpty &&
-                      gmailController.text.isNotEmpty) {
+                      numberController.text.isNotEmpty) {
                     Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => HomePage(),
+                          builder: (context) => HomeScreen(),
                         ),
                         (route) => false);
                   }
@@ -231,6 +231,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 : TextField(
                     controller: controller,
                     textInputAction: TextInputAction.next,
+                    keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
                     ),
