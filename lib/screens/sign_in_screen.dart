@@ -30,7 +30,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   "Вход",
                   style: TextStyle(
                     color: const Color(0xff3E4958),
-                    fontSize: MediaQuery.of(context).size.height * 20 / 812,
+                    fontSize: 18,
                     fontFamily: "PT Sans",
                     fontWeight: FontWeight.w700,
                     fontStyle: FontStyle.normal,
@@ -46,8 +46,9 @@ class _SignInScreenState extends State<SignInScreen> {
                 onTap: () {
                   if (passwordController.text.isNotEmpty &&
                       gmailController.text.isNotEmpty) {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => HomePage()));
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) => HomePage()),
+                        (Route<dynamic> route) => false);
                   }
                 },
                 child: Container(
@@ -118,7 +119,6 @@ class _SignInScreenState extends State<SignInScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-
                     Image.asset(
                       'assets/ic_facebook.png',
                       width: MediaQuery.of(context).size.width * 50 / 375,
@@ -129,7 +129,6 @@ class _SignInScreenState extends State<SignInScreen> {
                       width: MediaQuery.of(context).size.width * 50 / 375,
                       height: 50,
                     ),
-
                     Image.asset(
                       'assets/ic_gmail.png',
                       width: MediaQuery.of(context).size.width * 50 / 375,
@@ -230,9 +229,10 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                     ),
                   )
-                : const TextField(
+                : TextField(
+                    controller: controller,
                     textInputAction: TextInputAction.next,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                     ),
                   ),

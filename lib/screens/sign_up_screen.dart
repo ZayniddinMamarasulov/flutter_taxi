@@ -95,7 +95,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   SizedBox(width: MediaQuery.of(context).size.width * 6 / 375),
                   InkWell(
                     onTap: () {
-                      Navigator.pushReplacement(
+                      Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => const SignInScreen()));
