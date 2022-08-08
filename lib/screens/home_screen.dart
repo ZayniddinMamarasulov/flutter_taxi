@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_taxi/models/address.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
+
+import 'drawer_page.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  late YandexMapController controller;
+  GlobalKey mapKey = GlobalKey();
+
+  Future<bool> get locationPermissionNotGranted async =>
+      !(await Permission.location.request().isGranted);
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +31,7 @@ class HomePage extends StatelessWidget {
           topRight: Radius.circular(24),
         ),
       ),
-      drawer: const Drawer(
-        backgroundColor: Colors.green,
-      ),
+      drawer: DrawerScreen(),
     );
   }
 
@@ -61,7 +68,11 @@ class HomePage extends StatelessWidget {
     return Container(
       child: Stack(
         children: [
-          Expanded(child: YandexMap(mapObjects: mapObjects)),
+          Expanded(
+              child: YandexMap(
+            mapObjects: mapObjects,
+            zoomGesturesEnabled: true,
+          )),
           SafeArea(child: Expanded(child: buildAppBar())),
         ],
       ),
