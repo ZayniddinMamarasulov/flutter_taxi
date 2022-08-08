@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_taxi/components/appBar.dart';
-import 'package:flutter_taxi/screens/home_screen.dart';
 import 'package:flutter_taxi/screens/login_screen.dart';
+import 'package:flutter_taxi/screens/verify_screen.dart';
 import 'package:flutter_taxi/widgets/bottom_text_button.dart';
 import 'package:flutter_taxi/widgets/rounded_button.dart';
 import 'package:flutter_taxi/widgets/text_field_button.dart';
@@ -54,7 +54,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
             RoundedButton(
               title: 'Зарегистрироваться',
-              page: HomeScreen(),
+              page: VerifyScreen(),
             ),
             const Spacer(),
             const BottomTextButton(

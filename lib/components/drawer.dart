@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_taxi/screens/user_profile_screen.dart';
 
 Drawer drawer(Size size) {
   return Drawer(
@@ -47,17 +48,15 @@ Drawer drawer(Size size) {
             trailing: Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(.50),
-                    blurRadius: 8,
-                    spreadRadius: 1,
-                    offset: const Offset(-2, 2)
-                  )
-                ]
-              ),
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.grey.withOpacity(.50),
+                        blurRadius: 8,
+                        spreadRadius: 1,
+                        offset: const Offset(-2, 2))
+                  ]),
               child: const Text(
                 '1',
                 style: TextStyle(
@@ -103,18 +102,25 @@ class CustomDrawerHeader extends StatelessWidget {
         padding: const EdgeInsets.only(left: 52, top: 45),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            CircleAvatar(
-              backgroundImage: AssetImage(
-                'assets/photo_user.png',
+          children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return UserProfileScreen();
+                }));
+              },
+              child: const CircleAvatar(
+                backgroundImage: AssetImage(
+                  'assets/photo_user.png',
+                ),
+                backgroundColor: Colors.white,
+                radius: 40,
               ),
-              backgroundColor: Colors.white,
-              radius: 40,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Text(
+            const Text(
               'Егор',
               style: TextStyle(
                 color: Colors.white,
@@ -122,10 +128,10 @@ class CustomDrawerHeader extends StatelessWidget {
                 fontSize: 20,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 2,
             ),
-            Text(
+            const Text(
               'Udalovea@yandex.ru',
               style: TextStyle(
                 color: Colors.white,
