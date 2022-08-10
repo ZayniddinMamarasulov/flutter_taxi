@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_taxi/second_drawer-screen.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
@@ -11,7 +12,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final controller = ScrollController();
-
+    final List<MapObject> mapObjects = [];
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.white70,
@@ -109,16 +110,17 @@ class HomePage extends StatelessWidget {
       ),
       key: _scaffoldKey,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () => _scaffoldKey.currentState?.openDrawer(),
+        child: Stack(
+          children: [
+
+            Expanded(child: YandexMap(mapObjects: mapObjects)),
+            Row(
+              children: [
+                GestureDetector(
+                  onTap: () => _scaffoldKey.currentState?.openDrawer(),
+                  child: Expanded(
                     child: Container(
-                      margin: const EdgeInsets.all(8),
+                      margin: const EdgeInsets.all(6),
                       padding: const EdgeInsets.all(4),
                       height: 48,
                       decoration: BoxDecoration(
@@ -134,14 +136,14 @@ class HomePage extends StatelessWidget {
                       ),
                       child: Image.asset('assets/ic_menu.png'),
                     ),
-                  )
-                ],
-              ),
-            ],
-          ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
-      drawer: buildDrawer(context)
+      drawer: buildDrawer(context),
     );
   }
 
@@ -166,13 +168,15 @@ class HomePage extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>SecondDrawerScreen()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SecondDrawerScreen()));
             },
             child: SizedBox(
-              height: MediaQuery.of(context).size.height*0.29,
+              height: MediaQuery.of(context).size.height * 0.29,
               child: DrawerHeader(
-                  decoration: BoxDecoration(
-                      color: Color(0xff7cb342)),
+                  decoration: BoxDecoration(color: Color(0xff7cb342)),
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
@@ -182,41 +186,54 @@ class HomePage extends StatelessWidget {
                           backgroundImage: AssetImage("assets/men.jpg"),
                           radius: 36,
                         ),
-                        SizedBox(height: 11,),
-                        Text("Xondamir",style: TextStyle(fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
+                        SizedBox(
+                          height: 11,
                         ),
-                        SizedBox(height: 2,),
-                        Text("O'skanov@yandex.ru",style: TextStyle(color: Colors.white),)
+                        Text(
+                          "Xondamir",
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
+                        SizedBox(
+                          height: 2,
+                        ),
+                        Text(
+                          "O'skanov@yandex.ru",
+                          style: TextStyle(color: Colors.white),
+                        )
                       ],
                     ),
-                  )
-              ),
+                  )),
             ),
           ),
-          buildListTile("Sayohat tarixi","",Colors.white38),
-          buildListTile("To'lov usuli","",Colors.white38),
-          buildListTile("Kupon kodi","1",Colors.white),
-          buildListTile("Qo'llab-quvvatlsh","",Colors.white38),
+          buildListTile("Sayohat tarixi", "", Colors.white38),
+          buildListTile("To'lov usuli", "", Colors.white38),
+          buildListTile("Kupon kodi", "1", Colors.white),
+          buildListTile("Qo'llab-quvvatlsh", "", Colors.white38),
         ],
       ),
     );
   }
-  Widget buildListTile(String title, String text,Color color) {
+
+  Widget buildListTile(String title, String text, Color color) {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: ListTile(
         trailing: CircleAvatar(
           backgroundColor: color,
           radius: 15,
-          child: Text(text,style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+          child: Text(
+            text,
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          ),
         ),
-        title: Text(title.toUpperCase(),
+        title: Text(
+          title.toUpperCase(),
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
     );
   }
-
 }
