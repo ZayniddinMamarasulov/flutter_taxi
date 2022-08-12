@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: backgroundColor),
       initialRoute: '/',
       routes: {
-        '/':(context) => const SplashScreen(),
+        '/': (context) => const SplashScreen(),
         'verify': (context) => const VerificationScreen(),
       },
     );

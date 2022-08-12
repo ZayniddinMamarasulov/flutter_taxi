@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/colors.dart';
 import 'home_screen.dart';
@@ -17,7 +18,6 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   void dispose() {
-
     super.dispose();
     passwordController.dispose();
     numberController.dispose();
@@ -55,6 +55,8 @@ class _SignInScreenState extends State<SignInScreen> {
                 onTap: () {
                   if (passwordController.text.isNotEmpty &&
                       numberController.text.isNotEmpty) {
+                    saveLogin();
+
                     Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
@@ -240,5 +242,10 @@ class _SignInScreenState extends State<SignInScreen> {
         ],
       ),
     );
+  }
+
+  void saveLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isLogIn', true);
   }
 }

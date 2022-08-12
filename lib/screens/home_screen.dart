@@ -1,119 +1,211 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_taxi/screens/drawer_screen.dart';
+import 'package:simple_ripple_animation/simple_ripple_animation.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:yandex_mapkit/yandex_mapkit.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({Key? key}) : super(key: key);
+import '../models/address.dart';
 
+// ignore: must_be_immutable
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () => _scaffoldKey.currentState?.openDrawer(),
-                    child: Container(
-                      margin: const EdgeInsets.all(8),
-                      padding: const EdgeInsets.all(4),
-                      height: 48,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 2,
-                            blurRadius: 8,
-                          ),
-                        ],
-                      ),
-                      child: Image.asset('assets/ic_menu.png'),
-                    ),
-                  ),
-                ],
-              ),
-              TextButton(
-                  onPressed: () {
-                    buildBottomSheet(context);
-                  },
-                  child: const Text('show bottomsheet')),
-            ],
-          ),
-        ),
+      body: SlidingUpPanel(
+        minHeight: MediaQuery.of(context).size.height * 0.25,
+        maxHeight: MediaQuery.of(context).size.height * 0.85,
+        body: buildBody(),
+        panel: buildPanel(context),
       ),
       drawer: const DrawerScreen(),
     );
   }
 
-  Future buildBottomSheet(BuildContext context) {
-    return showModalBottomSheet(
-        backgroundColor: Colors.transparent,
-        barrierColor: Colors.transparent,
-        context: context,
-        builder: (context) {
-          return Container(
-            decoration: const BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Color.fromRGBO(0, 0, 0, 0.05),
-                    offset: Offset(-1, -1),
-                    blurRadius: 10,
-                  )
-                ],
-                color: Color(0xffFFFFFF),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(26),
-                  topRight: Radius.circular(26),
-                )),
-            child: Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 15, bottom: 25),
-                  width: 30,
-                  height: 4,
-                  decoration: const BoxDecoration(
-                      color: Color(0xffD5DDE0),
-                      borderRadius: BorderRadius.all(Radius.circular(4))),
-                ),
-                Container(
-                  width: 333,
-                  height: 44,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color.fromRGBO(0, 0, 0, 0.1),
-                        offset: Offset(0, 3),
-                        spreadRadius: 4,
-                        blurRadius: 7,
-                      )
-                    ],
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                  ),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      prefixIcon: Padding(
-                        padding: const EdgeInsets.all(10).copyWith(bottom: 4),
-                        child: const Image(
-                          width: 30,
-                          height: 30,
-                          image: AssetImage('assets/ic_search.png'),
-                        ),
-                      ),
-                    ),
-                  ),
+  final List<MapObject> mapObjects = [];
+
+  Row buildAppBar() {
+    return Row(
+      children: [
+        GestureDetector(
+          onTap: () => _scaffoldKey.currentState?.openDrawer(),
+          child: Container(
+            margin: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(4),
+            height: 48,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 2,
+                  blurRadius: 8,
                 ),
               ],
             ),
-          );
-        });
+            child: Image.asset('assets/ic_menu.png'),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Stack buildBody() {
+    return Stack(
+      children: [
+        Expanded(child: YandexMap(mapObjects: mapObjects)),
+        SafeArea(child: Expanded(child: buildAppBar())),
+      ],
+    );
+  }
+
+  Container buildPanel(context) {
+    return Container(
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(24),
+            topRight: Radius.circular(24),
+          ),
+        ),
+        child: Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(top: 12),
+              height: 4,
+              width: 32,
+              color: const Color(0xffD5DDE0),
+            ),
+            const SizedBox(height: 12),
+            InkWell(
+              onTap: () {
+                setState(() {
+                  showDialog(
+                      barrierColor: const Color.fromRGBO(62, 73, 88, 0.9),
+                      context: context,
+                      builder: (context) => searchTaxi());
+                });
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //       builder: (context) => const SearchTaxiScreen(),
+                //     ));
+              },
+              child: Container(
+                height: 50,
+                width: 200,
+                decoration: const BoxDecoration(
+                    color: Color(0xff7EAB3A),
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                child: const Center(
+                  child: Text(
+                    'Поиск такси',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 16, left: 16, right: 16),
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(24)),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.3),
+                    spreadRadius: 4,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+              ),
+              child: const TextField(
+                decoration: InputDecoration(
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: Color(0xff7EAB3A),
+                    size: 30,
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(24),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Expanded(child: addressList()),
+          ],
+        ));
+  }
+
+  List<Address> addresses = [
+    Address(street: "ул. Таубе, 15", city: "Омск"),
+    Address(street: "ул. Старозагородная Роща, д. 8", city: "Омск"),
+  ];
+
+  ListView addressList() {
+    return ListView.separated(
+      separatorBuilder: (BuildContext context, int index) {
+        return Divider(
+          indent: MediaQuery.of(context).size.width * 0.2,
+          endIndent: MediaQuery.of(context).size.width * 0.05,
+          thickness: 1,
+          color: Colors.black38,
+        );
+      },
+      itemCount: 2,
+      itemBuilder: (BuildContext context, int index) {
+        return ListTile(
+          leading: const CircleAvatar(
+            radius: 24,
+            backgroundColor: Color(0xffD5DDE0),
+            child: Icon(
+              Icons.place,
+              color: Colors.white,
+              size: 32,
+            ),
+          ),
+          subtitle: Text(addresses[index].city ?? ""),
+          title: Text(addresses[index].street ?? ""),
+        );
+      },
+    );
+  }
+
+  searchTaxi() {
+    return SimpleDialog(
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      title: RippleAnimation(
+        repeat: true,
+        minRadius: 70,
+        ripplesCount: 3,
+        duration: const Duration(seconds: 7),
+        delay: const Duration(seconds: 0),
+        color: const Color(0xffffffff),
+        child: Center(
+          child: Image.asset(
+            height: 90,
+            width: 90,
+            'assets/car_top.png',
+          ),
+        ),
+      ),
+    );
   }
 }

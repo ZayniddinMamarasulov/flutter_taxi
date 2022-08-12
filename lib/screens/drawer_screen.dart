@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_taxi/screens/profile_screen.dart';
+import 'package:flutter_taxi/screens/sign_up_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/colors.dart';
 
@@ -160,7 +162,15 @@ class DrawerScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 52, bottom: 68),
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    unSaveLogin();
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SignUpScreen(),
+                        ),
+                        (route) => false);
+                  },
                   child: const Text(
                     "Выйти",
                     style: TextStyle(
@@ -195,5 +205,10 @@ class DrawerScreen extends StatelessWidget {
             child: ProfileScreen(),
           );
         });
+  }
+
+  void unSaveLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isLogIn', false);
   }
 }
