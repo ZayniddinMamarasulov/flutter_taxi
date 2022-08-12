@@ -193,7 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.transparent,
       title: RippleAnimation(
         repeat: true,
-        minRadius: 72,
+        minRadius: 70,
         ripplesCount: 3,
         duration: const Duration(seconds: 7),
         delay: const Duration(seconds: 0),
