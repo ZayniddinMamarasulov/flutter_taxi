@@ -200,8 +200,8 @@ class _HomeScreenState extends State<HomeScreen> {
         color: const Color(0xffffffff),
         child: Center(
           child: Image.asset(
-            height: 90,
-            width: 90,
+            height: 100,
+            width: 100,
             'assets/car_top.png',
           ),
         ),
