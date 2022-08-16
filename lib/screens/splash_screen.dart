@@ -1,21 +1,17 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_taxi/models/address.dart';
-import 'package:flutter_taxi/screens/home_screen.dart';
 import 'package:flutter_taxi/screens/sign_up_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+
+class SplashPage extends StatefulWidget {
+  const SplashPage({Key? key}) : super(key: key);
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  State<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
-  bool isLogin = false;
-
+class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
@@ -27,19 +23,9 @@ class _SplashScreenState extends State<SplashScreen> {
     return Timer(duration, route);
   }
 
-  Future<bool> getLoginState() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool("isLogIn") ?? false;
-  }
-
-  route() async {
-    isLogin = await getLoginState();
-    if (isLogin) {
-      var userAddress = Address(city: 'Tashkent');
-      Navigator.pushReplacementNamed(context, '/', arguments: userAddress);
-    } else {
-      Navigator.pushReplacementNamed(context, '/sign-up');
-    }
+  route() {
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => RegisPAge()));
   }
 
   @override
@@ -48,11 +34,14 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Container(
         decoration: const BoxDecoration(
             image: DecorationImage(
-                fit: BoxFit.cover,
-                image: AssetImage('assets/splash_background.png'))),
+              image: AssetImage(
+                "assets/splash-map.png",
+              ),
+              fit: BoxFit.cover,
+            )),
         child: Center(
           child: Image.asset(
-            'assets/splash_logo.png',
+            "assets/loader-2.png",
             fit: BoxFit.cover,
           ),
         ),

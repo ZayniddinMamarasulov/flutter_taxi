@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_taxi/router.dart';
-import 'package:flutter_taxi/screens/home_screen.dart';
+import 'package:flutter_taxi/screens/splash_screen.dart';
+
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      initialRoute: '/splash',
-      onGenerateRoute: MyRouter.generateRoute,
-    );
-  }
+  State<MyApp> createState() => _MyAppState();
+}
 
-  void some(context) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => HomePage()));
+class _MyAppState extends State<MyApp> {
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: SplashPage(),
+    );
   }
 }

@@ -1,251 +1,233 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_taxi/screens/sign_up_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 import 'home_screen.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({Key? key}) : super(key: key);
+class SignIn extends StatefulWidget {
+  const SignIn({Key? key}) : super(key: key);
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  State<SignIn> createState() => _SignInState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
-  bool isObscureText = true;
-  final passwordController = TextEditingController();
-  final gmailController = TextEditingController();
+class _SignInState extends State<SignIn> {
+  final formKey = GlobalKey<FormState>();
+  bool _isPassHidden = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color(0xffF7F8F9),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height * 20 / 812,
-                width: MediaQuery.of(context).size.width * 237 / 375,
-                margin: const EdgeInsets.only(top: 35),
-                child: Text(
-                  "Вход",
-                  style: TextStyle(
-                    color: const Color(0xff3E4958),
-                    fontSize: 18,
-                    fontFamily: "PT Sans",
-                    fontWeight: FontWeight.w700,
-                    fontStyle: FontStyle.normal,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height * 153 / 812),
-              buildTextField('ЭЛЕКТРОННАЯ ПОЧТА', gmailController),
-              buildTextField('ПАРОЛЬ', passwordController, isPassword: true),
-              SizedBox(height: MediaQuery.of(context).size.height * 36 / 812),
-              InkWell(
-                onTap: () {
-                  saveLogin();
-                  if (passwordController.text.isNotEmpty &&
-                      gmailController.text.isNotEmpty) {
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) => HomePage()),
-                        (Route<dynamic> route) => false);
-                  }
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                      vertical: MediaQuery.of(context).size.height * 22 / 812),
-                  height: MediaQuery.of(context).size.height * 60 / 812,
-                  width: MediaQuery.of(context).size.width * 303 / 375,
-                  decoration: BoxDecoration(
-                    color: const Color(0xff7EAB3A),
-                    border:
-                        Border.all(color: const Color(0xffD5DDE0), width: 0.5),
-                    borderRadius: const BorderRadius.all(Radius.circular(15)),
-                  ),
-                  child: Text(
-                    "Войти",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontStyle: FontStyle.normal,
-                        fontFamily: "Inter",
-                        fontWeight: FontWeight.w700,
-                        fontSize:
-                            MediaQuery.of(context).size.height * 16 / 812),
-                  ),
-                ),
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height * 50 / 812),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                      margin: EdgeInsets.only(
-                          right: MediaQuery.of(context).size.width * 9 / 375),
-                      width: MediaQuery.of(context).size.width * 59 / 375,
-                      child: const Divider(
-                        height: 2,
-                        color: Color(0xffD5DDE0),
-                      )),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 167 / 375,
-                    height: MediaQuery.of(context).size.height * 20 / 812,
-                    child: Center(
-                        child: Text(
-                      'Или Войдите С помощью',
-                      style: TextStyle(
-                        color: const Color(0xff3E4958),
-                        fontSize: MediaQuery.of(context).size.height * 13 / 812,
-                        fontWeight: FontWeight.w700,
-                        fontStyle: FontStyle.normal,
-                        fontFamily: "PT Sans",
-                      ),
-                    )),
-                  ),
-                  Container(
-                      margin: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width * 9 / 375),
-                      width: MediaQuery.of(context).size.width * 59 / 375,
-                      child: const Divider(
-                        height: 2,
-                        color: Color(0xffD5DDE0),
-                      )),
-                ],
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height * 30 / 812),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width * 90 / 375),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Image.asset(
-                      'assets/ic_facebook.png',
-                      width: MediaQuery.of(context).size.width * 50 / 375,
-                      height: 50,
-                    ),
-                    Image.asset(
-                      'assets/ic_twitter.png',
-                      width: MediaQuery.of(context).size.width * 50 / 375,
-                      height: 50,
-                    ),
-                    Image.asset(
-                      'assets/ic_gmail.png',
-                      width: MediaQuery.of(context).size.width * 50 / 375,
-                      height: 50,
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height * 125 / 812),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Нет учетной записи? ",
-                    style: TextStyle(
-                      color: const Color(0xff97ADB6),
-                      fontSize: MediaQuery.of(context).size.height * 15 / 812,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: "Inter",
-                      fontStyle: FontStyle.normal,
-                    ),
-                  ),
-                  SizedBox(width: MediaQuery.of(context).size.width * 6 / 375),
-                  InkWell(
-                    onTap: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const SignUpScreen()));
-                    },
-                    child: Text(
-                      "Регистрация",
-                      style: TextStyle(
-                        color: const Color(0xff7EAB3A),
-                        fontSize: MediaQuery.of(context).size.height * 15 / 812,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: "Inter",
-                        fontStyle: FontStyle.normal,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ));
-  }
-
-  Padding buildTextField(String text, controller, {bool isPassword = false}) {
-    return Padding(
-      padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).size.height * 16 / 812,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: ListView(
         children: [
-          Container(
-            margin: EdgeInsets.only(
-                left: MediaQuery.of(context).size.width * 40 / 375),
-            height: MediaQuery.of(context).size.height * 20 / 812,
-            width: MediaQuery.of(context).size.width * 256 / 375,
-            child: Text(
-              text,
-              style: const TextStyle(color: Color(0xff3E4958), fontSize: 13),
-            ),
-          ),
-          SizedBox(height: MediaQuery.of(context).size.height * 7 / 812),
-          Container(
-            margin: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width * 36 / 375),
-            padding: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width * 12 / 375),
-            height: MediaQuery.of(context).size.height * 44 / 812,
-            width: MediaQuery.of(context).size.width * 303 / 375,
-            decoration: BoxDecoration(
-              color: const Color(0x40D5DDE0),
-              borderRadius: const BorderRadius.all(Radius.circular(15)),
-              border: Border.all(color: const Color(0xffD5DDE0), width: 0.5),
-            ),
-            child: isPassword
-                ? TextField(
-                    controller: controller,
-                    obscureText: isObscureText,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: Form(
+              key: formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                  ),
+                  const Text(
+                    "Sign in",
+                    style: TextStyle(
+                      fontSize: 26,
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.width * 0.28,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Email"),
+                      ],
+                    ),
+                  ),
+                  TextFormField(
+                    validator: (value) {
+                      RegExp rex = RegExp(
+                          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+                      if (!rex.hasMatch(value!)) {
+                        return "The email format is incorrect";
+                      }
+                    },
+                    decoration: const InputDecoration(
+                      fillColor: Color(0xffF7F8F9),
+                      filled: true,
+                      contentPadding:
+                      EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                      ),
+                      // labelText: "Email",
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Text("Pssword"),
+                      ],
+                    ),
+                  ),
+                  TextFormField(
+                    obscureText: _isPassHidden,
+                    validator: (value) {
+                      RegExp regex = RegExp(
+                          r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+                      if (value!.isEmpty) {
+                        return 'Please enter password';
+                      } else {
+                        if (!regex.hasMatch(value)) {
+                          return 'Enter valid password';
+                        } else {
+                          return null;
+                        }
+                      }
+                    },
                     decoration: InputDecoration(
-                      border: InputBorder.none,
-                      suffixIcon: InkWell(
-                        onTap: () {
-                          setState(() {
-                            isObscureText = !isObscureText;
-                          });
-                        },
-                        child: Icon(
-                          isObscureText
-                              ? Icons.visibility_off
-                              : Icons.visibility,
-                          color: const Color(0xff97ADB6),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 15, horizontal: 10),
+                      fillColor: Color(0xffF7F8F9),
+                      filled: true,
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                      ),
+                      suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _isPassHidden = !_isPassHidden;
+                            });
+                          },
+                          icon: _isPassHidden
+                              ? const Icon(Icons.visibility_off)
+                              : const Icon(Icons.visibility)),
+                      suffixIconColor: Colors.grey,
+                      // labelText: "Password",
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                  ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Stack(
+                      children: [
+                        Positioned.fill(
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              color: Color(0xff7EAB3A),
+                            ),
+                          ),
+                        ),
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 100, vertical: 18),
+                            primary: Colors.white,
+                            textStyle: const TextStyle(fontSize: 20),
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              // final isValid = formKey.currentState?.validate();
+                              Navigator.of(
+                                  context).pushAndRemoveUntil(MaterialPageRoute(
+                                  builder: (context) => HomePage()), (Route<dynamic>route) => false);
+                            });
+                          },
+                          child: const Text("Registration"),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.08,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.2,
+                        child: Divider(
+                          height: 2,
+                          color: Colors.black,
                         ),
                       ),
-                    ),
-                  )
-                : TextField(
-                    controller: controller,
-                    textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                      border: InputBorder.none,
-                    ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.05,
+                      ),
+                      const Text(
+                        "Or Login With",
+                        style: TextStyle(
+                          color: Color(0xff3E4958),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          fontStyle: FontStyle.normal,
+                        ),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.05,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.2,
+                        child: Divider(
+                          height: 2,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
                   ),
-          ),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.036,),
+                  Container(
+                      width: MediaQuery.of(context).size.width*0.51,
+                      height: MediaQuery.of(context).size.height * 0.07,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Image.asset("assets/ic_facebook.png"),
+                          // SizedBox(width: MediaQuery.of(context).size.width * 0.05,),
+                          Image.asset("assets/ic_twitter.png"),
+                          // SizedBox(width: MediaQuery.of(context).size.width * 0.05,),
+                          Image.asset("assets/ic_gmail.png"),
+                        ],
+                      )),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.08,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Don't have an account?"),
+                      TextButton(
+                        onPressed: () {
+                          setState(() {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => RegisPAge()));
+                          });
+                        },
+                        child: const Text(
+                          "Sign up",
+                          style: TextStyle(color: Color(0xff7EAB3A)),
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );
-  }
-
-  void saveLogin() async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setBool("isLogIn", true);
   }
 }
