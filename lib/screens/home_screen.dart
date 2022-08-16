@@ -4,16 +4,70 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  final Address? userAddress;
 
+  HomePage({Key? key, this.userAddress}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   late YandexMapController controller;
+
   GlobalKey mapKey = GlobalKey();
 
   Future<bool> get locationPermissionNotGranted async =>
       !(await Permission.location.request().isGranted);
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<void> checkPermission(BuildContext context) async {
+    if (await locationPermissionNotGranted) {
+      _showMessage(context, Text('Location permission was NOT granted'));
+      return;
+    }
+
+    // final mediaQuery = MediaQuery.of(context);
+    // final height =
+    //     mapKey.currentContext!.size!.height * mediaQuery.devicePixelRatio;
+    // final width =
+    //     mapKey.currentContext!.size!.width * mediaQuery.devicePixelRatio;
+    //
+    await controller.toggleUserLayer(
+        visible: true,
+        autoZoomEnabled: true,
+        anchor: UserLocationAnchor(
+            course: Offset(0.5 * 2, 0.5 * 2),
+            normal: Offset(0.5 * 2, 0.5 * 2)));
+
+    // final place = PlacemarkMapObject(
+    //     icon: PlacemarkIcon.single(PlacemarkIconStyle(
+    //         image: BitmapDescriptor.fromAssetImage('assets/user.png'),
+    //         rotationType: RotationType.rotate)),
+    //     mapId: MapObjectId('current'),
+    //     opacity: 0.7,
+    //     direction: 0,
+    //     isDraggable: true,
+    //     onDragStart: (_) => print('Drag start'),
+    //     onDrag: (_, Point point) => print('Drag at point $point'),
+    //     onDragEnd: (_) => print('Drag end'),
+    //     point: Point(longitude: 0.0, latitude: 0.0));
+    //
+    // setState(() {
+    //   mapObjects.add(place);
+    // });
+  }
+
+  void _showMessage(BuildContext context, Text text) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: text));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +85,11 @@ class HomePage extends StatelessWidget {
       ),
       drawer: const Drawer(
         backgroundColor: Colors.green,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          checkPermission(context);
+        },
       ),
     );
   }
@@ -69,10 +128,27 @@ class HomePage extends StatelessWidget {
       child: Stack(
         children: [
           Expanded(
-              child: YandexMap(
-            mapObjects: mapObjects,
-            zoomGesturesEnabled: true,
-          )),
+            child: YandexMap(
+              onMapCreated: (YandexMapController yandexMapController) async {
+                controller = yandexMapController;
+              },
+              onUserLocationAdded: (UserLocationView view) async {
+                return view.copyWith(
+                    pin: view.pin.copyWith(
+                        icon: PlacemarkIcon.single(PlacemarkIconStyle(
+                            image: BitmapDescriptor.fromAssetImage(
+                                'assets/user.png')))),
+                    arrow: view.arrow.copyWith(
+                        icon: PlacemarkIcon.single(PlacemarkIconStyle(
+                            image: BitmapDescriptor.fromAssetImage(
+                                'assets/arrow.png')))),
+                    accuracyCircle: view.accuracyCircle
+                        .copyWith(fillColor: Colors.green.withOpacity(0.5)));
+              },
+              mapObjects: mapObjects,
+              zoomGesturesEnabled: true,
+            ),
+          ),
           SafeArea(child: Expanded(child: buildAppBar())),
         ],
       ),

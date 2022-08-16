@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_taxi/screens/sign_up_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'home_screen.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -44,6 +45,7 @@ class _SignInScreenState extends State<SignInScreen> {
               SizedBox(height: MediaQuery.of(context).size.height * 36 / 812),
               InkWell(
                 onTap: () {
+                  saveLogin();
                   if (passwordController.text.isNotEmpty &&
                       gmailController.text.isNotEmpty) {
                     Navigator.of(context).pushAndRemoveUntil(
@@ -240,5 +242,10 @@ class _SignInScreenState extends State<SignInScreen> {
         ],
       ),
     );
+  }
+
+  void saveLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool("isLogIn", true);
   }
 }
