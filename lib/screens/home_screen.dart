@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_taxi/models/address.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -37,7 +39,7 @@ class _HomePageState extends State<HomePage> {
           onTap: () => _scaffoldKey.currentState?.openDrawer(),
           child: Container(
             margin: EdgeInsets.all(8),
-            height: 50,
+            height: MediaQuery.of(context).size.height*0.07 ,
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.white,
@@ -54,15 +56,20 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget buildBody() {
-    return SafeArea(
-      child: Column(
+  final List<MapObject> mapObjects = [];
+
+  Widget buildBody()   {
+    return  Stack(
         children: [
-          buildAppBAr(),
-          Text("This is body"),
+          Expanded(
+              child: YandexMap(
+                  mapObjects: mapObjects
+              )
+          ),
+          SafeArea(child: buildAppBAr()),
         ],
-      ),
-    );
+      );
+
   }
 
   Widget buildPanel() {
@@ -142,4 +149,6 @@ class _HomePageState extends State<HomePage> {
       },
     );
   }
+
+
 }

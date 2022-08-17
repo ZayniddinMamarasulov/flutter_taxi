@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_taxi/screens/sign_up_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'home_screen.dart';
 
@@ -137,6 +138,7 @@ class _SignInState extends State<SignIn> {
                           ),
                           onPressed: () {
                             setState(() {
+                              saveLogin();
                               // final isValid = formKey.currentState?.validate();
                               Navigator.of(
                                   context).pushAndRemoveUntil(MaterialPageRoute(
@@ -156,7 +158,7 @@ class _SignInState extends State<SignIn> {
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.2,
-                        child: Divider(
+                        child: const Divider(
                           height: 2,
                           color: Colors.black,
                         ),
@@ -176,9 +178,9 @@ class _SignInState extends State<SignIn> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.05,
                       ),
-                      Container(
+                      SizedBox(
                         width: MediaQuery.of(context).size.width * 0.2,
-                        child: Divider(
+                        child: const Divider(
                           height: 2,
                           color: Colors.black,
                         ),
@@ -229,5 +231,9 @@ class _SignInState extends State<SignIn> {
         ],
       ),
     );
+  }
+  void saveLogin() async{
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool("isLogIn", true);
   }
 }
