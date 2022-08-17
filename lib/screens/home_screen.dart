@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         children: [
           buildAppBAr(),
-          Text("This is body"),
+          Text("This is body"),Text("This is body"),
         ],
       ),
     );
