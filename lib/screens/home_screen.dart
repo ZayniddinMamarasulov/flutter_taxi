@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_taxi/screens/drawer_screen.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:simple_ripple_animation/simple_ripple_animation.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 import '../models/address.dart';
 
-// ignore: must_be_immutable
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -15,7 +15,42 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  late YandexMapController controller;
+
+  // GlobalKey mapKey = GlobalKey();
+
+  Future<bool> get locationPermissionNotGranted async =>
+      !(await Permission.location.request().isGranted);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  Future<void> checkPermission(BuildContext context) async {
+    if (await locationPermissionNotGranted) {
+      _showMessage(context, const Text("location permission was NOt granted"));
+      return;
+    }
+    final mediaQuery = MediaQuery.of(context);
+    final height =
+        _scaffoldKey.currentContext!.size!.height * mediaQuery.devicePixelRatio;
+    final width =
+        _scaffoldKey.currentContext!.size!.height * mediaQuery.devicePixelRatio;
+    await controller.toggleUserLayer(
+        visible: true,
+        headingEnabled: true,
+        autoZoomEnabled: true,
+        anchor: UserLocationAnchor(
+            course: Offset(0.5 * height, 0.5 * width),
+            normal: Offset(0.5 * height, 0.5 * width)));
+  }
+
+  _showMessage(BuildContext context, Text text) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: text));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +63,11 @@ class _HomeScreenState extends State<HomeScreen> {
         panel: buildPanel(context),
       ),
       drawer: const DrawerScreen(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          checkPermission(context);
+        },
+      ),
     );
   }
 
@@ -63,7 +103,27 @@ class _HomeScreenState extends State<HomeScreen> {
   Stack buildBody() {
     return Stack(
       children: [
-        Expanded(child: YandexMap(mapObjects: mapObjects)),
+        Expanded(
+            child: YandexMap(
+          onMapCreated: (YandexMapController yandexMapController) async {
+            controller = yandexMapController;
+          },
+          onUserLocationAdded: (UserLocationView view) async {
+            return view.copyWith(
+                pin: view.pin.copyWith(
+                    icon: PlacemarkIcon.single(PlacemarkIconStyle(
+                        image: BitmapDescriptor.fromAssetImage(
+                            'assets/user.png')))),
+                arrow: view.arrow.copyWith(
+                    icon: PlacemarkIcon.single(PlacemarkIconStyle(
+                        image: BitmapDescriptor.fromAssetImage(
+                            'assets/ic_dest.png')))),
+                accuracyCircle: view.accuracyCircle
+                    .copyWith(fillColor: Colors.green.withOpacity(0.5)));
+          },
+          mapObjects: mapObjects,
+          zoomGesturesEnabled: true,
+        )),
         SafeArea(child: Expanded(child: buildAppBar())),
       ],
     );
@@ -90,22 +150,21 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {
                 setState(() {
                   showDialog(
-                      barrierColor: const Color.fromRGBO(62, 73, 88, 0.9),
-                      context: context,
-                      builder: (context) => searchTaxi());
+                    barrierColor: const Color.fromRGBO(62, 73, 88, 0.9),
+                    context: context,
+                    builder: (context) => searchTaxi(),
+                  );
                 });
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => const SearchTaxiScreen(),
-                //     ));
               },
               child: Container(
                 height: 50,
                 width: 200,
                 decoration: const BoxDecoration(
-                    color: Color(0xff7EAB3A),
-                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                  color: Color(0xff7EAB3A),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                ),
                 child: const Center(
                   child: Text(
                     'Поиск такси',

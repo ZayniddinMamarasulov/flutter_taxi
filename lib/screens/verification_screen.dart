@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_taxi/utils/colors.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
 
+// ignore: must_be_immutable
 class VerificationScreen extends StatefulWidget {
-  const VerificationScreen({Key? key}) : super(key: key);
+  String phoneNumber;
+  VerificationScreen(this.phoneNumber, {Key? key}) : super(key: key);
 
   @override
   State<VerificationScreen> createState() => _VerificationScreenState();
@@ -15,9 +17,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final arg =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    dynamic number = arg['number'];
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -67,7 +66,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
             height: 45,
             width: 200,
             child: Text(
-              " Код был отправлен на $number на SMS",
+              " Код был отправлен на ${widget.phoneNumber} на SMS",
               style: const TextStyle(
                 color: Color(0xff97ADB6),
                 fontSize: 15,

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_taxi/screens/sign_in_screen.dart';
 import 'package:flutter_taxi/utils/colors.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -60,8 +58,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       numberController.text.isNotEmpty &&
                       nameController.text.isNotEmpty) {
                     String number = numberController.text;
-                    Navigator.pushNamed(context, 'verify',
-                        arguments: {'number': number});
+                    Navigator.pushNamed(context, '/verify',
+                        arguments: number);
                   }
                 },
                 child: Container(
@@ -103,10 +101,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const SizedBox(width: 6),
                   InkWell(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const SignInScreen()));
+                      Navigator.pop(context);
                     },
                     child: const Text(
                       "Войти",

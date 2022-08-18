@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_taxi/screens/sign_up_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/colors.dart';
@@ -60,7 +61,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => HomeScreen(),
+                          builder: (context) => const HomeScreen(),
                         ),
                         (route) => false);
                   }
@@ -163,7 +164,10 @@ class _SignInScreenState extends State<SignInScreen> {
                   const SizedBox(width: 6),
                   InkWell(
                     onTap: () {
-                      Navigator.pop(context);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SignUpScreen()));
                     },
                     child: const Text(
                       "Регистрация",
