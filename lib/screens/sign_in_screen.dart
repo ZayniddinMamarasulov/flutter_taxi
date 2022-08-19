@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_taxi/screens/sign_up_screen.dart';
+import 'package:flutter_taxi/utils/routes.dart';
+import 'package:flutter_taxi/utils/strings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/colors.dart';
-import 'home_screen.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -36,9 +38,9 @@ class _SignInScreenState extends State<SignInScreen> {
                 height: 20,
                 width: 237,
                 margin: const EdgeInsets.only(top: 35),
-                child: const Text(
-                  "Вход",
-                  style: TextStyle(
+                child: Text(
+                  stringEntrance.tr(),
+                  style: const TextStyle(
                     color: Color(0xff3E4958),
                     fontSize: 20,
                     fontFamily: "PT Sans",
@@ -49,8 +51,10 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ),
               const SizedBox(height: 153),
-              buildTextField('номер телефона'.toUpperCase(), numberController),
-              buildTextField('ПАРОЛЬ', passwordController, isPassword: true),
+              buildTextField(
+                  stringPhoneNumber.toUpperCase().tr(), numberController),
+              buildTextField(stringPassword.tr(), passwordController,
+                  isPassword: true),
               const SizedBox(height: 36),
               InkWell(
                 onTap: () {
@@ -58,12 +62,8 @@ class _SignInScreenState extends State<SignInScreen> {
                       numberController.text.isNotEmpty) {
                     saveLogin();
 
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HomeScreen(),
-                        ),
-                        (route) => false);
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, routeHome, (route) => false);
                   }
                 },
                 child: Container(
@@ -76,10 +76,10 @@ class _SignInScreenState extends State<SignInScreen> {
                         Border.all(color: const Color(0xffD5DDE0), width: 0.5),
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
                   ),
-                  child: const Text(
-                    "Войти",
+                  child: Text(
+                    stringSignIn.tr(),
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Colors.white,
                         fontStyle: FontStyle.normal,
                         fontFamily: "Inter",
@@ -99,13 +99,13 @@ class _SignInScreenState extends State<SignInScreen> {
                         height: 2,
                         color: Color(0xffD5DDE0),
                       )),
-                  const SizedBox(
+                  SizedBox(
                     height: 20,
                     width: 167,
                     child: Center(
                         child: Text(
-                      'Или Войдите С помощью',
-                      style: TextStyle(
+                      stringOrLogInWith.tr(),
+                      style: const TextStyle(
                         color: Color(0xff3E4958),
                         fontSize: 13,
                         fontWeight: FontWeight.w700,
@@ -151,9 +151,9 @@ class _SignInScreenState extends State<SignInScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
-                    "Нет учетной записи? ",
-                    style: TextStyle(
+                  Text(
+                    stringHaveNotAcount.tr(),
+                    style: const TextStyle(
                       color: Color(0xff97ADB6),
                       fontSize: 15,
                       fontWeight: FontWeight.w400,
@@ -164,14 +164,15 @@ class _SignInScreenState extends State<SignInScreen> {
                   const SizedBox(width: 6),
                   InkWell(
                     onTap: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const SignUpScreen()));
+                            builder: (context) => const SignUpScreen(),
+                          ));
                     },
-                    child: const Text(
-                      "Регистрация",
-                      style: TextStyle(
+                    child: Text(
+                      stringRegistration.tr(),
+                      style: const TextStyle(
                         color: Color(0xff7EAB3A),
                         fontSize: 15,
                         fontWeight: FontWeight.w400,

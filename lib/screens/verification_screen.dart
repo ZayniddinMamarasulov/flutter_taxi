@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_taxi/utils/colors.dart';
+import 'package:flutter_taxi/utils/strings.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
 
 // ignore: must_be_immutable
@@ -17,7 +19,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -66,7 +67,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
             height: 45,
             width: 200,
             child: Text(
-              " Код был отправлен на ${widget.phoneNumber} на SMS",
+              stringSentTo.tr() +
+                  {widget.phoneNumber}.toString() +
+                  stringBySMS.tr(),
               style: const TextStyle(
                 color: Color(0xff97ADB6),
                 fontSize: 15,
@@ -86,11 +89,11 @@ class _VerificationScreenState extends State<VerificationScreen> {
             cursorColor: const Color(0xff7EAB3A),
             underlineUnfocusedColor: const Color(0xff7EAB3A),
 
-            clearAll: const Padding(
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 8),
+            clearAll:  Padding(
+              padding:const EdgeInsets.symmetric(vertical: 20, horizontal: 8),
               child: Text(
-                'Повторить отправку',
-                style: TextStyle(
+                stringResent.tr(),
+                style: const TextStyle(
                     fontSize: 12.0,
                     decoration: TextDecoration.underline,
                     fontWeight: FontWeight.w400,

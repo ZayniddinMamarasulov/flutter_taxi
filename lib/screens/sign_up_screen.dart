@@ -1,5 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_taxi/screens/sign_in_screen.dart';
 import 'package:flutter_taxi/utils/colors.dart';
+import 'package:flutter_taxi/utils/routes.dart';
+import 'package:flutter_taxi/utils/strings.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -35,9 +39,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 height: 20,
                 width: 237,
                 margin: const EdgeInsets.only(top: 35),
-                child: const Text(
-                  "Регистраация",
-                  style: TextStyle(
+                child: Text(
+                  stringRegistration.tr(),
+                  style: const TextStyle(
                     color: Color(0xff3E4958),
                     fontSize: 20,
                     fontFamily: "PT Sans",
@@ -48,9 +52,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
               const SizedBox(height: 153),
-              buildTextField('ИМЯ', nameController),
-              buildTextField('номер телефона'.toUpperCase(), numberController),
-              buildTextField('ПАРОЛЬ', passwordController),
+              buildTextField(stringName.tr().toUpperCase(), nameController),
+              buildTextField(
+                  stringPhoneNumber.tr().toUpperCase(), numberController),
+              buildTextField(
+                  stringPassword.tr().toUpperCase(), passwordController),
               const SizedBox(height: 36),
               InkWell(
                 onTap: () {
@@ -58,7 +64,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       numberController.text.isNotEmpty &&
                       nameController.text.isNotEmpty) {
                     String number = numberController.text;
-                    Navigator.pushNamed(context, '/verify',
+                    Navigator.pushNamed(context, routeVerify,
                         arguments: number);
                   }
                 },
@@ -72,10 +78,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Border.all(color: const Color(0xffD5DDE0), width: 0.5),
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
                   ),
-                  child: const Text(
-                    "Зарегистрироваться",
+                  child: Text(
+                    stringRegister.tr(),
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Colors.white,
                         fontStyle: FontStyle.normal,
                         fontFamily: "Inter",
@@ -88,9 +94,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
-                    "Уже есть учетная запись?",
-                    style: TextStyle(
+                  Text(
+                    stringHaveAccount.tr(),
+                    style: const TextStyle(
                       color: Color(0xff97ADB6),
                       fontSize: 15,
                       fontWeight: FontWeight.w400,
@@ -101,11 +107,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const SizedBox(width: 6),
                   InkWell(
                     onTap: () {
-                      Navigator.pop(context);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SignInScreen()));
                     },
-                    child: const Text(
-                      "Войти",
-                      style: TextStyle(
+                    child: Text(
+                      stringSignIn.tr(),
+                      style: const TextStyle(
                         color: Color(0xff7EAB3A),
                         fontSize: 15,
                         fontWeight: FontWeight.w400,
@@ -148,7 +157,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               borderRadius: const BorderRadius.all(Radius.circular(15)),
               border: Border.all(color: textFieldBorderColor, width: 0.5),
             ),
-            child: text == 'ПАРОЛЬ'
+            child: text == stringPassword.tr()
                 ? TextField(
                     controller: controller,
                     obscureText: isObscureText,
@@ -173,7 +182,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 : TextField(
                     controller: controller,
                     textInputAction: TextInputAction.next,
-                    keyboardType: text == 'номер телефона'
+                    keyboardType: text == stringPhoneNumber.tr()
                         ? TextInputType.number
                         : TextInputType.text,
                     decoration: const InputDecoration(

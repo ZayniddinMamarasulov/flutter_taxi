@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_taxi/utils/strings.dart';
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
@@ -71,17 +73,17 @@ class ProfileScreen extends StatelessWidget {
                 Row(
                   children: [
                     buildOption(
-                        'assets/ic_history.png', "История", 4, 4, context),
-                    buildOption('assets/ic_payment.png', "Способ оплаты", -4, 4,
+                        'assets/ic_history.png', stringHistory.tr(), 4, 4, context),
+                    buildOption('assets/ic_payment.png', stringPaymentMethod.tr(), -4, 4,
                         context),
                   ],
                 ),
                 Row(
                   children: [
                     buildOption(
-                        'assets/ic_promo.png', "Промокод", 4, -4, context),
+                        'assets/ic_promo.png', stringPromocode.tr(), 4, -4, context),
                     buildOption(
-                        'assets/ic_support.png', "Поддержка", -4, -4, context),
+                        'assets/ic_support.png', stringSupport.tr(), -4, -4, context),
                   ],
                 ),
               ],

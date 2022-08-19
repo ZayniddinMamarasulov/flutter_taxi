@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_taxi/screens/drawer_screen.dart';
+import 'package:flutter_taxi/utils/strings.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:simple_ripple_animation/simple_ripple_animation.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -18,20 +20,13 @@ class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   late YandexMapController controller;
 
-  // GlobalKey mapKey = GlobalKey();
-
   Future<bool> get locationPermissionNotGranted async =>
       !(await Permission.location.request().isGranted);
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
   Future<void> checkPermission(BuildContext context) async {
     if (await locationPermissionNotGranted) {
-      _showMessage(context, const Text("location permission was NOt granted"));
+      _showMessage(context, const Text("location permission was Not granted"));
       return;
     }
     final mediaQuery = MediaQuery.of(context);
@@ -113,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 pin: view.pin.copyWith(
                     icon: PlacemarkIcon.single(PlacemarkIconStyle(
                         image: BitmapDescriptor.fromAssetImage(
-                            'assets/user.png')))),
+                            'assets/ic_user.png')))),
                 arrow: view.arrow.copyWith(
                     icon: PlacemarkIcon.single(PlacemarkIconStyle(
                         image: BitmapDescriptor.fromAssetImage(
@@ -165,10 +160,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     Radius.circular(20),
                   ),
                 ),
-                child: const Center(
+                child: Center(
                   child: Text(
-                    'Поиск такси',
-                    style: TextStyle(
+                    stringTaxiSearch.tr(),
+                    style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w700,
                       fontSize: 18,
@@ -213,8 +208,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   List<Address> addresses = [
-    Address(street: "ул. Таубе, 15", city: "Омск"),
-    Address(street: "ул. Старозагородная Роща, д. 8", city: "Омск"),
+    Address(street: stringStreetTaube.tr(), city: stringOmsk.tr()),
+    Address(street: stringStreetStaro.tr(), city: stringOmsk.tr()),
   ];
 
   ListView addressList() {
