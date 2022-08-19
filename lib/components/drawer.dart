@@ -1,21 +1,25 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_taxi/screens/register_screen.dart';
 import 'package:flutter_taxi/screens/user_profile_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-Drawer drawer(Size size) {
+Drawer drawer(Size size,BuildContext context) {
   return Drawer(
-    child: ListView(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CustomDrawerHeader(
           size: size,
         ),
-        SizedBox(
+        const SizedBox(
           height: 24,
         ),
         Padding(
-          padding: const EdgeInsets.all(5.0),
+          padding: const EdgeInsets.only(left: 10,top: 5,bottom: 5),
           child: ListTile(
             title: Text(
-              'История поездок'.toUpperCase(),
+              "travel_history".tr().toUpperCase(),
               style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
@@ -24,10 +28,10 @@ Drawer drawer(Size size) {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(5.0),
+          padding: const EdgeInsets.only(left: 10,top: 5,bottom: 5),
           child: ListTile(
             title: Text(
-              'Сбособ Оплаты'.toUpperCase(),
+              "payment_method".tr().toUpperCase(),
               style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
@@ -36,10 +40,10 @@ Drawer drawer(Size size) {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(5.0),
+          padding: const EdgeInsets.only(left: 10,top: 5,bottom: 5),
           child: ListTile(
             title: Text(
-              'Промокод'.toUpperCase(),
+              'promo_code'.tr().toUpperCase(),
               style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
@@ -69,10 +73,10 @@ Drawer drawer(Size size) {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(5.0),
+          padding: const EdgeInsets.only(left: 10,top: 5,bottom: 5),
           child: ListTile(
             title: Text(
-              'Поддержка'.toUpperCase(),
+              'support'.tr().toUpperCase(),
               style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
@@ -80,9 +84,35 @@ Drawer drawer(Size size) {
             ),
           ),
         ),
+        Spacer(),
+        Padding(
+          padding:  EdgeInsets.only(top: size.height * 0.05,bottom: size.height * 0.05,left: 15,),
+          child: TextButton(
+            onPressed: () {
+              logOut();
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                return const RegisterScreen();
+              }));
+            },
+            child: Text(
+              'log_out'.tr(),
+              style: const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w400,
+                color: Color(0xff7EAB3A),
+                decoration: TextDecoration.underline,
+              ),
+            ),
+          ),
+        )
       ],
     ),
   );
+}
+
+void logOut() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setBool('isLogin', false);
 }
 
 class CustomDrawerHeader extends StatelessWidget {
@@ -97,6 +127,7 @@ class CustomDrawerHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: size.height * 260 / 813,
+      width: double.maxFinite,
       decoration: const BoxDecoration(color: Color(0xff7EAB3A)),
       child: Padding(
         padding: const EdgeInsets.only(left: 52, top: 45),
