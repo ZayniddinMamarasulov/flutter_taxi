@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_taxi/screens/home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class VerifyScreen extends StatefulWidget {
   const VerifyScreen({Key? key}) : super(key: key);
@@ -23,7 +24,9 @@ class _VerifyScreenState extends State<VerifyScreen> {
         elevation: 0,
         centerTitle: true,
         leading: GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Navigator.pop(context);
+          },
           child: Container(
             margin: const EdgeInsets.all(8),
             padding: const EdgeInsets.all(4),
@@ -150,12 +153,17 @@ class _VerifyScreenState extends State<VerifyScreen> {
     '9',
     'check',
     '0',
-    'backspace',
+    'backspace'
   ];
   int indexList = 0;
 
+  void saveLogin() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isLogin', true);
+  }
+
   Widget buildKeyboard(Size size) {
-    return  SizedBox(
+    return SizedBox(
       height: size.height * 0.35,
       width: double.maxFinite,
       child: GridView.builder(
@@ -166,9 +174,11 @@ class _VerifyScreenState extends State<VerifyScreen> {
           if (numbers[index] == 'check') {
             return GestureDetector(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return HomeScreen();
-                }));
+                saveLogin();
+                if (code.length == 4) {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const HomeScreen()));
+                }
               },
               child: Container(
                 width: size.width / 3,

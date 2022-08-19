@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_taxi/components/appBar.dart';
+import 'package:flutter_taxi/components/appbar.dart';
 import 'package:flutter_taxi/screens/home_screen.dart';
 import 'package:flutter_taxi/screens/register_screen.dart';
 import 'package:flutter_taxi/widgets/bottom_text_button.dart';
@@ -70,28 +69,14 @@ class _LoginScreenState extends State<LoginScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SvgPicture.asset('assets/icons/facebook.svg',
-                    height: 50, width: 50, color: Color(0xffD5DDE0)),
-                const SizedBox(width: 15,),
-                Container(
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color(0xffD5DDE0)
-                  ),
-                  child: SvgPicture.asset('assets/icons/twitter.svg',
-                      height: 30, width: 30, color: Colors.white),
+                CircleAvatar(
+                  backgroundColor: Colors.grey,
+                  backgroundImage: AssetImage('assets/ic_facebook.png'),
                 ),
                 const SizedBox(width: 15,),
-                Container(
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xffD5DDE0)
-                  ),
-                  child: SvgPicture.asset('assets/icons/google.svg',
-                      height: 30, width: 30, color: Colors.white),
-                )
+                CircleAvatar(),
+                const SizedBox(width: 15,),
+                CircleAvatar(),
               ],
             ),
             const Spacer(),

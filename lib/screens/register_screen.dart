@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_taxi/components/appBar.dart';
+import 'package:flutter_taxi/components/appbar.dart';
 import 'package:flutter_taxi/screens/login_screen.dart';
 import 'package:flutter_taxi/screens/verify_screen.dart';
 import 'package:flutter_taxi/widgets/bottom_text_button.dart';
@@ -52,7 +52,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             const SizedBox(
               height: 50,
             ),
-            RoundedButton(
+            const RoundedButton(
               title: 'Зарегистрироваться',
               page: VerifyScreen(),
             ),

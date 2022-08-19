@@ -22,7 +22,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+              },
               child: Container(
                 margin: const EdgeInsets.all(8),
                 padding: const EdgeInsets.all(4),
