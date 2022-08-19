@@ -1,11 +1,17 @@
 class Address {
   String? city;
   String? street;
-  Address({required this.city,required this.street});
-}
+  String? houseNumber;
+  String? apartmentNumber;
+  double? lat;
+  double? lon;
 
-class UserAction extends Address {
-  String? image;
-  UserAction({super.city,super.street,this.image});
-
+  Address({
+    this.city,
+    this.street,
+    this.houseNumber,
+    this.apartmentNumber,
+    this.lat,
+    this.lon,
+  });
 }
