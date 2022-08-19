@@ -1,0 +1,32 @@
+{
+    "name":"Ism",
+    "phone number":"telefon raqam",
+    "password":"parol",
+    "Register":"Roʻyxatdan oʻtish",
+    "orLoginWith":"Orqali Roʻyxatdan Oʻtish",
+    "haveNotAccount":"Hisobingiz yo'qmi?",
+    "haveAccount":"Alaqachon hisobingiz bormi?",
+    "Registration":"Registratsiya",
+    "Entrance":"Kirish",
+    "Sign In":"Kirish",
+    "travel history": "Travel history",
+    "Payment method": "To'lov usuli",
+    "promocode": "Promokod",
+    "support": "Qo'llab-quvvatlash",
+    "Log Out": "Chiqish",
+    "history": "tarix",
+    "sentTo": "",
+    "bySMS": "ga SMS orqali kod yuborildi",
+    "Resend": "qayta yuborish",
+    "Taxi Search": "Taxi qidirish",
+    "st. Taube, 15": "k. Тaube, 15",
+    "st. Starozagorodnaya garden, 8":"st. Starozagorodnaya bog'i, 8",
+    "Omsk": "Omsk",
+    "language":"Til",
+    "langUsb":"O'zbek",
+    "langEnGB":"English (GB)",
+    "langEnUS":"English (US)",
+    "langRu":"Русский"
+
+
+}

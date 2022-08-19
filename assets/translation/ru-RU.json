@@ -1,0 +1,33 @@
+{
+    "name": "ИМЯ",
+    "phone number": "номер телефона",
+    "password": "ПАРОЛЬ",
+    "Register": "Зарегистрироваться",
+    "orLoginWith": "Или Войдите C помощью",
+    "haveNotAccount": "Нет учетной записи? ",
+    "haveAccount": "Уже есть учетная запись?",
+    "Registration": "Регистрация",
+    "Entrance": "Вход",
+    "Sign In": "Войти",
+    "travel history": "История поездок",
+    "Payment method": "Сбособ Оплаты",
+    "promocode": "Промокод",
+    "support": "Поддержка",
+    "Log Out": "Выйти",
+    "history": "История",
+    "sentTo": " Код был отправлен на ",
+    "bySMS": " на SMS",
+    "Resend": "Повторить отправку",
+    "Taxi Search": "Поиск такси",
+    "st. Taube, 15": "ул. Таубе, 15",
+    "st. Starozagorodnaya garden, 8":"ул. Старозагородная Роща, д. 8",
+    "Omsk": "Омск",
+    "language":"Язык",
+    "langUsb":"O'zbek",
+    "langEnGB":"English (GB)",
+    "langEnUS":"English (US)",
+    "langRu":"Русский"
+
+    
+
+}
