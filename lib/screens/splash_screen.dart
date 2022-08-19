@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_taxi/screens/home_screen.dart';
+import 'package:flutter_taxi/screens/sign_in_screen.dart';
 import 'package:flutter_taxi/screens/sign_up_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -39,7 +40,7 @@ class _SplashPageState extends State<SplashPage> {
           context, MaterialPageRoute(builder: (context) => HomePage()));
     }else {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => RegisPAge()));
+          context, MaterialPageRoute(builder: (context) => SignIn()));
     }
   }
 
