@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_taxi/screens/sign_in_screen.dart';
 
@@ -27,10 +29,18 @@ class _RegisPAgeState extends State<RegisPAge> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(
-                    height: 35,
+                    height: 10,
                   ),
-                  const Text(
-                    "Sign up",
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(onPressed: () {
+                        _showPicker(context);
+                      }, child: Text("Language".tr()))
+                    ],
+                  ),
+                   Text(
+                    "Sign Up".tr(),
                     style: TextStyle(
                       fontSize: 26,
                     ),
@@ -43,14 +53,14 @@ class _RegisPAgeState extends State<RegisPAge> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Name"),
+                        Text("Name".tr()),
                       ],
                     ),
                   ),
                   TextFormField(
                     validator: (value) {
                       if (value!.length < 6) {
-                        return "Less than 6 characters";
+                        return "Less than 6 characters".tr();
                       }
                     },
                     decoration: const InputDecoration(
@@ -59,8 +69,7 @@ class _RegisPAgeState extends State<RegisPAge> {
                       contentPadding:
                       EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15.0)
-                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(15.0)),
                       ),
                       // labelText: "Name",
                     ),
@@ -73,15 +82,16 @@ class _RegisPAgeState extends State<RegisPAge> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Email"),
+                        Text("Email".tr()),
                       ],
                     ),
                   ),
                   TextFormField(
                     validator: (value) {
-                      RegExp rex = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+                      RegExp rex = RegExp(
+                          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
                       if (!rex.hasMatch(value!)) {
-                        return "The email format is incorrect";
+                        return "The email format is incorrect".tr();
                       }
                     },
                     decoration: const InputDecoration(
@@ -103,28 +113,28 @@ class _RegisPAgeState extends State<RegisPAge> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Pssword"),
+                        Text("Password".tr()),
                       ],
                     ),
                   ),
                   TextFormField(
                     obscureText: _isPassHidden,
                     validator: (value) {
-                      RegExp regex =
-                      RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+                      RegExp regex = RegExp(
+                          r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
                       if (value!.isEmpty) {
-                        return 'Please enter password';
+                        return 'Please enter password'.tr();
                       } else {
                         if (!regex.hasMatch(value)) {
-                          return 'Enter valid password';
+                          return 'Enter valid password'.tr();
                         } else {
                           return null;
                         }
                       }
                     },
                     decoration: InputDecoration(
-                      contentPadding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 15, horizontal: 10),
                       fillColor: Color(0xffF7F8F9),
                       filled: true,
                       border: const OutlineInputBorder(
@@ -132,7 +142,7 @@ class _RegisPAgeState extends State<RegisPAge> {
                       ),
                       suffixIcon: IconButton(
                           onPressed: () {
-                            setState((){
+                            setState(() {
                               _isPassHidden = !_isPassHidden;
                             });
                           },
@@ -159,17 +169,21 @@ class _RegisPAgeState extends State<RegisPAge> {
                         ),
                         TextButton(
                           style: TextButton.styleFrom(
-                            padding: EdgeInsets.symmetric(horizontal: 100, vertical: 18),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 90, vertical: 18),
                             primary: Colors.white,
                             textStyle: const TextStyle(fontSize: 20),
                           ),
                           onPressed: () {
                             setState(() {
                               // final isValid = formKey.currentState?.validate();
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SignIn()));
                             });
                           },
-                          child: const Text("Registration"),
+                          child: Text("Registration".tr()),
                         ),
                       ],
                     ),
@@ -180,16 +194,19 @@ class _RegisPAgeState extends State<RegisPAge> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text("Already have an account?"),
+                      Text("Already have an account?".tr()),
                       TextButton(
                         onPressed: () {
                           setState(() {
                             // final isValid = formKey.currentState?.validate();
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SignIn()));
                           });
                         },
-                        child: const Text(
-                          " Sign in",
+                        child: Text(
+                          " Sign in".tr(),
                           style: TextStyle(color: Color(0xff7EAB3A)),
                         ),
                       )
@@ -202,5 +219,38 @@ class _RegisPAgeState extends State<RegisPAge> {
         ],
       ),
     );
+  }
+
+  int index = 0;
+  final list = ["O'zbek tili", "English language", "Русская язык"];
+  final List locales = const[
+    Locale("uz", "UZ"),
+    Locale("en", "US"),
+    Locale("ru", "RU")
+  ];
+
+  void _showPicker(BuildContext context) {
+    showCupertinoModalPopup(
+        barrierColor: Colors.transparent,
+        context: context,
+        builder: (_) =>
+            SizedBox(
+              height: 100,
+              child: CupertinoPicker(
+                  scrollController: FixedExtentScrollController(
+                      initialItem: index),
+                  backgroundColor: Theme
+                      .of(context)
+                      .backgroundColor,
+                  onSelectedItemChanged: (value) {
+                    setState(() {
+                      index = value;
+                    });
+                  },
+                  itemExtent: 50,
+                  children: List<Widget>.generate(list.length, (index) =>
+                      Center(child: Text(list[index])))),
+            )).then((value) { context.setLocale(locales[index]);
+            });
   }
 }

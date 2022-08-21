@@ -1,9 +1,16 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_taxi/screens/splash_screen.dart';
 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
 
-void main() {
-  runApp(const MyApp());
+  runApp(EasyLocalization(supportedLocales: [
+    Locale("en", "US"),
+    Locale("uz", "UZ"),
+    Locale("ru", "RU")
+  ], path: 'assets/translations', child: MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -16,7 +23,10 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       home: SplashPage(),
     );
   }

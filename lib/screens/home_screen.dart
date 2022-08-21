@@ -1,6 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_taxi/models/address.dart';
 import 'package:flutter_taxi/screens/sign_in_screen.dart';
+import 'package:flutter_taxi/screens/taxi_search.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
@@ -14,6 +17,35 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  late YandexMapController controller;
+
+  GlobalKey mapKey = GlobalKey();
+
+  Future<bool> get locationPermissionNotGranted async =>
+      !(await Permission.location.request().isGranted);
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<void> checkPermission(BuildContext context) async {
+    if (await locationPermissionNotGranted) {
+      _showMessage(context, Text('Location permission was NOT granted'));
+      return;
+    }
+
+    await controller.toggleUserLayer(
+        visible: true,
+        autoZoomEnabled: true,
+        anchor: const UserLocationAnchor(
+            course: Offset(0.5 * 2, 0.5 * 2),
+            normal: Offset(0.5 * 2, 0.5 * 2)));
+  }
+
+  void _showMessage(BuildContext context, Text text) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: text));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,15 +59,17 @@ class _HomePageState extends State<HomePage> {
       body: InkWell(
         onTap: () {},
         child: SlidingUpPanel(
-          minHeight: MediaQuery.of(context).size.height * 0.05,
-          maxHeight: MediaQuery.of(context).size.height * 0.3,
+          minHeight: MediaQuery.of(context).size.height * 0.04,
+          maxHeight: MediaQuery.of(context).size.height * 0.5,
           body: buildBody(),
           panel: buildPanel(),
           borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(24), topRight: Radius.circular(24)),
         ),
       ),
+
     );
+
   }
 
   Widget buildAppBAr() {
@@ -55,7 +89,7 @@ class _HomePageState extends State<HomePage> {
                       spreadRadius: 2,
                       blurRadius: 8)
                 ]),
-            child: Image.asset("assets/ic_menu.png"),
+               child: Image.asset("assets/ic_menu.png"),
           ),
         ),
       ],
@@ -116,21 +150,21 @@ class _HomePageState extends State<HomePage> {
         ),
         child: Column(
           children: [
-            const ListTile(
+             ListTile(
               title: Text(
-                "Travel history",
+                "Travel history".tr(),
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
               ),
             ),
-            const ListTile(
+             ListTile(
               title: Text(
-                "Payment method",
+                "Payment method".tr(),
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
               ),
             ),
             ListTile(
-              title: const Text(
-                "Promo code",
+              title: Text(
+                "Promo code".tr(),
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
               ),
               trailing: Container(
@@ -153,9 +187,9 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            const ListTile(
+             ListTile(
               title: Text(
-                "Support",
+                "Support".tr(),
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
               ),
             ),
@@ -172,9 +206,9 @@ class _HomePageState extends State<HomePage> {
                       (Route<dynamic> route) => false);
                 });
               },
-              child: const ListTile(
+              child: ListTile(
                 title: Text(
-                  "Log Out",
+                  "Log Out".tr(),
                   style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
@@ -191,7 +225,7 @@ class _HomePageState extends State<HomePage> {
 
   double sizeOfPanel = 0.05;
 
-  Widget currentLocation() {
+  Widget currentLocation(context) {
     return Padding(
       padding: EdgeInsets.symmetric(
           vertical: MediaQuery.of(context).size.height * sizeOfPanel),
@@ -206,20 +240,13 @@ class _HomePageState extends State<HomePage> {
                     horizontal: 2,
                     vertical: MediaQuery.of(context).size.height * 0.05),
                 height: MediaQuery.of(context).size.height * 0.07,
-                child: const CircleAvatar(
+                child: CircleAvatar(
                     backgroundColor: Colors.white,
                     radius: 40,
-                    child: Icon(
-                      Icons.my_location,
-                      size: 30,
-                      color: Color(0xff3E4958),
-                    )),
-                // Image.asset(
-                //   "assets/img.png",
-                //   // height: 12,
-                //   // width: 12,
-                // ),
-              ),
+                    child: IconButton(onPressed: (){
+                      checkPermission(context);
+                    }, icon: const Icon(Icons.my_location, color: Colors.black,)),
+              ),)
             ],
           )
         ],
@@ -232,9 +259,30 @@ class _HomePageState extends State<HomePage> {
   Widget buildBody() {
     return Stack(
       children: [
-        Expanded(child: YandexMap(mapObjects: mapObjects)),
+        Expanded(
+          child: YandexMap(
+            onMapCreated: (YandexMapController yandexMapController) async {
+              controller = yandexMapController;
+            },
+            onUserLocationAdded: (UserLocationView view) async {
+              return view.copyWith(
+                  pin: view.pin.copyWith(
+                      icon: PlacemarkIcon.single(PlacemarkIconStyle(
+                          image: BitmapDescriptor.fromAssetImage(
+                              'assets/ic_pick.png')))),
+                  arrow: view.arrow.copyWith(
+                      icon: PlacemarkIcon.single(PlacemarkIconStyle(
+                          image: BitmapDescriptor.fromAssetImage(
+                              'assets/ic_pick.png')))),
+                  accuracyCircle: view.accuracyCircle
+                      .copyWith(fillColor: Colors.green.withOpacity(0.5)));
+            },
+            mapObjects: mapObjects,
+            zoomGesturesEnabled: true,
+          ),
+        ),
         SafeArea(child: buildAppBAr()),
-        currentLocation(),
+        currentLocation(context),
       ],
     );
   }
@@ -253,7 +301,38 @@ class _HomePageState extends State<HomePage> {
             color: Color(0xffD5DDE0),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.05,
+            height: MediaQuery.of(context).size.height * 0.02,
+          ),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Stack(
+              children: [
+                Positioned.fill(
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: Color(0xff7EAB3A),
+                    ),
+                  ),
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.07, vertical: 18),
+                    primary: Colors.white,
+                    textStyle: const TextStyle(fontSize: 20),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      // final isValid = formKey.currentState?.validate();
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => SearchTaxi()));
+                    });
+                  },
+                  child: const Text("Order a taxi"),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.025,
           ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 15, vertical: 4),

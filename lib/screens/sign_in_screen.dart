@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_taxi/screens/sign_up_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,23 +30,31 @@ class _SignInState extends State<SignIn> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.05,
+                    height: MediaQuery.of(context).size.height * 0.005,
                   ),
-                  const Text(
-                    "Sign in",
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(onPressed: () {
+                        _showPicker(context);
+                      }, child: Text("Language".tr(),style: TextStyle(color: Color(0xff7EAB3A)),))
+                    ],
+                  ),
+                  Text(
+                    "Sign In".tr(),
                     style: TextStyle(
                       fontSize: 26,
                     ),
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.width * 0.28,
+                    height: MediaQuery.of(context).size.width * 0.25,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Email"),
+                        Text("Email".tr()),
                       ],
                     ),
                   ),
@@ -53,7 +63,7 @@ class _SignInState extends State<SignIn> {
                       RegExp rex = RegExp(
                           r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
                       if (!rex.hasMatch(value!)) {
-                        return "The email format is incorrect";
+                        return "The email format is incorrect".tr();
                       }
                     },
                     decoration: const InputDecoration(
@@ -74,8 +84,8 @@ class _SignInState extends State<SignIn> {
                     padding: const EdgeInsets.symmetric(horizontal: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text("Pssword"),
+                      children:  [
+                        Text("Password".tr()),
                       ],
                     ),
                   ),
@@ -85,10 +95,10 @@ class _SignInState extends State<SignIn> {
                       RegExp regex = RegExp(
                           r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
                       if (value!.isEmpty) {
-                        return 'Please enter password';
+                        return 'Please enter password'.tr();
                       } else {
                         if (!regex.hasMatch(value)) {
-                          return 'Enter valid password';
+                          return 'Enter valid password'.tr();
                         } else {
                           return null;
                         }
@@ -132,7 +142,7 @@ class _SignInState extends State<SignIn> {
                         TextButton(
                           style: TextButton.styleFrom(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 100, vertical: 18),
+                                horizontal: 90, vertical: 18),
                             primary: Colors.white,
                             textStyle: const TextStyle(fontSize: 20),
                           ),
@@ -145,7 +155,7 @@ class _SignInState extends State<SignIn> {
                                   builder: (context) => HomePage()), (Route<dynamic>route) => false);
                             });
                           },
-                          child: const Text("Registration"),
+                          child: Text("Registration".tr()),
                         ),
                       ],
                     ),
@@ -157,18 +167,18 @@ class _SignInState extends State<SignIn> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.2,
+                        width: MediaQuery.of(context).size.width * 0.15,
                         child: const Divider(
                           height: 2,
                           color: Colors.black,
                         ),
                       ),
                       SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.05,
+                        width: MediaQuery.of(context).size.width * 0.03,
                       ),
-                      const Text(
-                        "Or Login With",
-                        style: TextStyle(
+                       Text(
+                        "or Login With".tr(),
+                        style: const TextStyle(
                           color: Color(0xff3E4958),
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
@@ -176,10 +186,10 @@ class _SignInState extends State<SignIn> {
                         ),
                       ),
                       SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.05,
+                        width: MediaQuery.of(context).size.width * 0.03,
                       ),
                       SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.2,
+                        width: MediaQuery.of(context).size.width * 0.15,
                         child: const Divider(
                           height: 2,
                           color: Colors.black,
@@ -207,7 +217,7 @@ class _SignInState extends State<SignIn> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text("Don't have an account?"),
+                      Text("Don't have an account?".tr()),
                       TextButton(
                         onPressed: () {
                           setState(() {
@@ -217,8 +227,8 @@ class _SignInState extends State<SignIn> {
                                     builder: (context) => RegisPAge()));
                           });
                         },
-                        child: const Text(
-                          "Sign up",
+                        child: Text(
+                          "Register".tr(),
                           style: TextStyle(color: Color(0xff7EAB3A)),
                         ),
                       )
@@ -236,4 +246,36 @@ class _SignInState extends State<SignIn> {
     final prefs = await SharedPreferences.getInstance();
     prefs.setBool("isLogIn", true);
   }
+
+  int index = 0;
+  final list = ["O'zbek tili", "English language", "Русская язык"];
+  final List locales = const[
+    Locale("uz", "UZ"),
+    Locale("en", "US"),
+    Locale("ru", "RU")
+  ];
+  void _showPicker(BuildContext context) {
+    showCupertinoModalPopup(
+        barrierColor: Colors.transparent,
+        context: context,
+        builder: (_) =>
+            SizedBox(
+              height: 150,
+              child: CupertinoPicker(
+                  scrollController: FixedExtentScrollController(
+                      initialItem: index),
+                  backgroundColor: Color(0xff7EAB3A),
+                  onSelectedItemChanged: (value) {
+                    setState(() {
+                      index = value;
+                    });
+                  },
+                  itemExtent: 50,
+                  children: List<Widget>.generate(list.length, (index) =>
+                      Center(child: Text(list[index],style: TextStyle(color: Color(0xffFFFFFF)),)))),
+            )).then((value) { context.setLocale(locales[index]);
+    });
+  }
 }
+
+
