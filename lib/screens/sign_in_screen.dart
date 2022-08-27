@@ -107,7 +107,7 @@ class _SignInState extends State<SignIn> {
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 15, horizontal: 10),
-                      fillColor: Color(0xffF7F8F9),
+                      fillColor: const Color(0xffF7F8F9),
                       filled: true,
                       border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(15.0)),
